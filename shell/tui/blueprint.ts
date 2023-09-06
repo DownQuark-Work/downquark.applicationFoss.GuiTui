@@ -1,9 +1,11 @@
-import { DEBUG_GUITUI } from "../_utils/_constants.ts";
+import { DEBUG_GUITUI, EnumConfigSetup } from "../_utils/_constants.ts";
 import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
 
+import { char } from "../_utils/characters.ts";
 import { InitActions } from "./blueprint.actions.ts";
 
 import { BluePrintType,TomlType } from '../../guitui.d.ts';
+
 
 type ConversionFncType = 
   (id:string,tl:[string|number|Array<string|number>,string|number|Array<string|number>],br:[string|number|Array<string|number>,string|number|Array<string|number>])
@@ -26,15 +28,26 @@ const { Grid } = UtilsGrid,
       }
 
 const applyConfigs = () => {
-  console.log('BP.TUI.CONFIG?.SHOW_BORDER: ', BP.TUI.CONFIG?.SHOW_BORDER)
+  if(BP.TUI.CONFIG?.RENDER?.includes(EnumConfigSetup.SCROLLABLE_SECTION_WITH_BORDER)) { // currently the only config
+    // console.log('char: ', char)
+    const typeMapForSubGrid = Grid.Create.SubGrid
+    for(const subGrid in BP.SubSectionGrids) {
+      const appliedSG = (BP.SubSectionGrids[subGrid] as ReturnType<typeof typeMapForSubGrid>).subGridPerimeter.applied
+      // console.log('subGrid: ', appliedSG)
+      // Grid.Set.Cells({location:appliedSG,value:subGrid})
+    }
+  }
+  
   // InitActions()
   
-  if(DEBUG_GUITUI === 2){
-    console.clear()
-    Grid.Render()
-    console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
-    // console.log('BP: ', BP)
-  }
+  // if(DEBUG_GUITUI === 2){
+  //   console.clear()
+  //   Grid.Render()
+  //   // console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
+  //   // console.log('BP: ', BP)
+  //   // console.log('char: ', char)
+
+  // }
 }
 
 // const ambiguousSections = [] // sections without w/h defined - for phase 2
@@ -96,7 +109,15 @@ const createSubSections = () => {
     Grid.Set.Cells({location:subGrid.subGridIndexes,value:section.fillCharacter||''})
   });
 
-  applyConfigs()
+  // applyConfigs()
+  if(DEBUG_GUITUI === 2){
+    console.clear()
+    Grid.Render()
+    // console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
+    // console.log('BP: ', BP)
+    // console.log('char: ', char)
+
+  }
 }
 
 export const Init = (tuiData:TomlType) => {

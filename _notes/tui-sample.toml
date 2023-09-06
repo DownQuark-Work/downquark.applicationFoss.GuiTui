@@ -54,4 +54,4 @@ scriptSrc='./main.sh'
 
 [CONFIG]
 FILL_CHARACTER = ''
-SHOW_BORDER = true
+RENDER = ['SCROLLABLE_SECTION_WITH_BORDER']

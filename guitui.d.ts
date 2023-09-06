@@ -1,3 +1,5 @@
+import { EnumConfigSetup } from "./shell/_utils/_constants.ts"
+
 type TomlSectionType = {
   id: string,
   label: string,
@@ -19,7 +21,9 @@ export type TomlType =  {
   version: string,
   owner: { "@": string },
   sections: TomlSectionType[],
-  CONFIG?: {[k:string]:unknown}
+  CONFIG?: {
+    RENDER?: EnumConfigSetup[],
+    [k:string]:unknown}
 }
 
 export type BluePrintType = {

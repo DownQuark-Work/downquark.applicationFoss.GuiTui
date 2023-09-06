@@ -2,5 +2,5 @@
   "editor.tabSize": 2,
   "deno.enable": true,
   "deno.lint": false,
-  "deno.config": "./src/Gaming/_scrx/deno.jsonc"
+  "deno.config": "./deno.jsonc"
 }
