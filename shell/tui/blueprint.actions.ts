@@ -8,7 +8,7 @@ const { Grid } = UtilsGrid
   export const InitActions = () => {
     console.clear()
     Grid.Render()
-    console.log('char: ', char)
+    // console.log('char: ', char)
 
     // listens for keyboard events
     //  and prevents the process from exiting

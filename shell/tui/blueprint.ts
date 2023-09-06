@@ -1,6 +1,7 @@
 import { DEBUG_GUITUI, EnumConfigSetup } from "../_utils/_constants.ts";
 import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
 
+import { chalq } from "../_deps.ts";
 import { char } from "../_utils/characters.ts";
 import { InitActions } from "./blueprint.actions.ts";
 
@@ -32,19 +33,19 @@ const applyConfigs = () => {
     const typeMapForSubGrid = Grid.Create.SubGrid
     for(const subGrid in BP.SubSectionGrids) {
       const appliedSG = (BP.SubSectionGrids[subGrid] as ReturnType<typeof typeMapForSubGrid>).subGridPerimeter.applied
-      //
-      Grid.Set.Cells({location:appliedSG,value:char.borderH})
+        // leave dim for now - will apply focus during the next step anyway
+      Grid.Set.Cells({location:appliedSG,value:chalq.dim(char.borderV)})
     }
   }
   
   // InitActions()
   
-  if(DEBUG_GUITUI === 2){
+  if(DEBUG_GUITUI < 2){
     console.clear()
     Grid.Render()
-  //   // console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
-  //   // console.log('BP: ', BP)
-  //   // console.log('char: ', char)
+    console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
+    console.log('BP: ', BP)
+    console.log('char: ', char)
   }
 }
 
@@ -103,8 +104,9 @@ const createSubSections = () => {
     
     // store indexes
     BP.SubSectionGrids[section.id] = subGrid
-
-    Grid.Set.Cells({location:subGrid.subGridIndexes,value:section.fillCharacter||''})
+    
+    const styledVal = section.active ? section.fillCharacter||'' : chalq.dim(section.fillCharacter||'')
+    Grid.Set.Cells({location:subGrid.subGridIndexes,value:styledVal})
   });
 
   applyConfigs()
