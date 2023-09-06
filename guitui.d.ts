@@ -12,6 +12,7 @@ type TomlSectionType = {
 type TomlConfigType = {
 
 }
+
 export type TomlType =  {
   project: string,
   created: string,
@@ -19,4 +20,14 @@ export type TomlType =  {
   owner: { "@": string },
   sections: TomlSectionType[],
   CONFIG?: {[k:string]:unknown}
+}
+
+export type BluePrintType = {
+  DIMENSION: {
+    h: number,
+    w: number,
+  },
+  SubSectionGrids:{[k:string]:unknown},
+  SubSectionCoordsMap:{[k:string]:[number,number,number,number]},
+  TUI:TomlType,
 }

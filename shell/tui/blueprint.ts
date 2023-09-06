@@ -3,7 +3,7 @@ import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/
 
 import { InitActions } from "./blueprint.actions.ts";
 
-import { TomlType } from '../../guitui.d.ts';
+import { BluePrintType,TomlType } from '../../guitui.d.ts';
 
 type ConversionFncType = 
   (id:string,tl:[string|number|Array<string|number>,string|number|Array<string|number>],br:[string|number|Array<string|number>,string|number|Array<string|number>])
@@ -15,16 +15,29 @@ const { Grid } = UtilsGrid,
         version: "",owner: { "@": ""},
         sections: []
       },
-      BP = {
+      BP:BluePrintType = {
         DIMENSION: {
           h: Deno.consoleSize().rows,
           w: Deno.consoleSize().columns,
         },
-        SubSectionGrids:[],
+        SubSectionCoordsMap:{},
+        SubSectionGrids:{},
         TUI,
       }
 
-// const ambiguousSections = [] // sections without w/h defined
+const applyConfigs = () => {
+  console.log('BP.TUI.CONFIG?.SHOW_BORDER: ', BP.TUI.CONFIG?.SHOW_BORDER)
+  // InitActions()
+  
+  if(DEBUG_GUITUI === 2){
+    console.clear()
+    Grid.Render()
+    console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
+    // console.log('BP: ', BP)
+  }
+}
+
+// const ambiguousSections = [] // sections without w/h defined - for phase 2
 const createSubSections = () => {
   const atCoord:ConversionFncType = (id,tl,br) => {
     const tlbr = [...tl,...br||[]],
@@ -67,39 +80,30 @@ const createSubSections = () => {
     return retCoord as [number,number,number,number]
   }
   
-  const convertedSectionCoordsMap:{[k:string]:[number,number,number,number]} = {}
   BP.TUI.sections?.forEach(section => {
-    const coordPoint = atCoord(section.id,[section.x,section.y],[section.w,section.h])
-    // below for phase 2 with optional w/h
-    // const botRt = [section.w||null,section.h||null]
-    // // console.log('section: ', botRt,section)
-    // const coordPoint = botRt.filter(Boolean).length
-    //   ? atCoord(section.id,[section.x,section.y],botRt)
-    //   : atCoord(section.id,[section.x,section.y])
-    // console.log('coordPoint: ', coordPoint)
-    //
-    const [t,l,b,r] = coordPoint
-    convertedSectionCoordsMap[section.id] = [t,l,Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)]
-    // check for ambiguity overlap here (phase 2)
+    const coordPoint = atCoord(section.id,[section.x,section.y],[section.w,section.h]),
+          [t,l,b,r] = coordPoint,
+          convertedSectionCoords:[number,number,number,number] = [t,l,Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)]
+    
+    // store bounding coordinates
+    BP.SubSectionCoordsMap[section.id] = [...convertedSectionCoords]
 
     const subGrid = Grid.Create.SubGrid([t,l],[Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)])
+    
+    // store indexes
+    BP.SubSectionGrids[section.id] = subGrid
 
     Grid.Set.Cells({location:subGrid.subGridIndexes,value:section.fillCharacter||''})
   });
 
-  InitActions()
-  
-  if(DEBUG_GUITUI < 2){
-    console.log('convertedSectionCoordsMap: ', convertedSectionCoordsMap)
-    console.log('BP: ', BP)
-  }
+  applyConfigs()
 }
 
 export const Init = (tuiData:TomlType) => {
   BP.TUI = tuiData
   console.clear() // start with a blank output
   Grid.Create.Config({
-    FILL_CHARACTER:'.',
+    FILL_CHARACTER:BP.TUI.CONFIG?.FILL_CHARACTER||'',
     GRID_HEIGHT:BP.DIMENSION.h,
     GRID_WIDTH:BP.DIMENSION.w,
   })

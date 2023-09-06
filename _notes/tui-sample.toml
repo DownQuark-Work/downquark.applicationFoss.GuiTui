@@ -54,3 +54,4 @@ scriptSrc='./main.sh'
 
 [CONFIG]
 FILL_CHARACTER = ''
+SHOW_BORDER = true
