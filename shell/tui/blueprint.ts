@@ -3,6 +3,7 @@ import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/
 
 import { chalq } from "../_deps.ts";
 import { char } from "../_utils/characters.ts";
+import { cornerCoords } from "../_utils/grid.ts";
 import { InitActions } from "./blueprint.actions.ts";
 
 import { BluePrintType,TomlType } from '../../guitui.d.ts';
@@ -32,20 +33,36 @@ const applyConfigs = () => {
   if(BP.TUI.CONFIG?.RENDER?.includes(EnumConfigSetup.SCROLLABLE_SECTION_WITH_BORDER)) { // currently the only config
     const typeMapForSubGrid = Grid.Create.SubGrid
     for(const subGrid in BP.SubSectionGrids) {
-      const appliedSG = (BP.SubSectionGrids[subGrid] as ReturnType<typeof typeMapForSubGrid>).subGridPerimeter.applied
+      const appliedSG = (BP.SubSectionGrids[subGrid] as ReturnType<typeof typeMapForSubGrid>).subGridPerimeter.applied,
+            horizontalBorder:number[] = [],
+            verticalBorder:number[] = []
+            appliedSG.forEach((asg,indx) => {
+              if( // arrays are reverse sorted
+                appliedSG[indx+1] === asg-1
+                && appliedSG[indx-1] === asg+1
+              ) horizontalBorder.push(asg) 
+              else verticalBorder.push(asg)
+            })
         // leave dim for now - will apply focus during the next step anyway
-      Grid.Set.Cells({location:appliedSG,value:chalq.dim(char.borderV)})
+      Grid.Set.Cells({location:horizontalBorder,value:chalq.dim(char.borderH)})
+      Grid.Set.Cells({location:verticalBorder,value:chalq.dim(char.borderV)})
+      
+      // add corner icons
+      // const curSubCoordMap = BP.SubSectionCoordsMap[subGrid].bounds
+      // console.log('cornerCoords: ', cornerCoords(curSubCoordMap))
+      
     }
   }
   
   // InitActions()
   
-  if(DEBUG_GUITUI < 2){
-    console.clear()
+  if(DEBUG_GUITUI === 2){
+    // console.clear()
     Grid.Render()
-    console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
-    console.log('BP: ', BP)
-    console.log('char: ', char)
+    // console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
+    // console.log('BP: ', BP)
+    // console.log('Grid.Get.Cells(): ', Grid.Set.Position([31, 9])._i)
+    // console.log('char: ', char)
   }
 }
 
@@ -98,7 +115,11 @@ const createSubSections = () => {
           convertedSectionCoords:[number,number,number,number] = [t,l,Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)]
     
     // store bounding coordinates
-    BP.SubSectionCoordsMap[section.id] = [...convertedSectionCoords]
+    BP.SubSectionCoordsMap[section.id] = {
+      bounds:[...convertedSectionCoords],
+      tlbr:cornerCoords(convertedSectionCoords)
+    }
+    console.log('BP.SubSectionCoordsMap: ', BP.SubSectionCoordsMap)
 
     const subGrid = Grid.Create.SubGrid([t,l],[Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)])
     

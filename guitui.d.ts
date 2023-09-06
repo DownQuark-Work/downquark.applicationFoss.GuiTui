@@ -1,4 +1,6 @@
-import { EnumConfigSetup } from "./shell/_utils/_constants.ts"
+import { EnumConfigSetup, TLBR_KEY_INDEX_ENUM } from "./shell/_utils/_constants.ts"
+
+export type CreateMutable<Type> = { -readonly [Property in keyof Type]: Type[Property]; };
 
 type TomlSectionType = {
   id: string,
@@ -26,12 +28,24 @@ export type TomlType =  {
     [k:string]:unknown}
 }
 
+export type TlbrKeyEnumStrings = keyof typeof TLBR_KEY_INDEX_ENUM;
+
+export type TLBRobjWithEnumKeyType={[j in TlbrKeyEnumStrings]: {
+    _i: number;
+    _coord: [number,number];
+    ADJACENT?: unknown;
+  };
+};
 export type BluePrintType = {
   DIMENSION: {
     h: number,
     w: number,
   },
   SubSectionGrids:{[k:string]:unknown},
-  SubSectionCoordsMap:{[k:string]:[number,number,number,number]},
+  SubSectionCoordsMap:{[k:string]:{
+      bounds:[number,number,number,number]
+      tlbr:TLBRobjWithEnumKeyType,
+    }
+  },
   TUI:TomlType,
 }
