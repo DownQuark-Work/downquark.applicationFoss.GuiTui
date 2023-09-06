@@ -29,6 +29,7 @@ const { Grid } = UtilsGrid,
 
 const applyConfigs = () => {
   if(BP.TUI.CONFIG?.RENDER?.includes(EnumConfigSetup.SCROLLABLE_SECTION_WITH_BORDER)) { // currently the only config
+    return
     // console.log('char: ', char)
     const typeMapForSubGrid = Grid.Create.SubGrid
     for(const subGrid in BP.SubSectionGrids) {
@@ -40,14 +41,13 @@ const applyConfigs = () => {
   
   // InitActions()
   
-  // if(DEBUG_GUITUI === 2){
-  //   console.clear()
-  //   Grid.Render()
+  if(DEBUG_GUITUI === 2){
+    console.clear()
+    Grid.Render()
   //   // console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
   //   // console.log('BP: ', BP)
   //   // console.log('char: ', char)
-
-  // }
+  }
 }
 
 // const ambiguousSections = [] // sections without w/h defined - for phase 2
@@ -113,7 +113,7 @@ const createSubSections = () => {
   if(DEBUG_GUITUI === 2){
     console.clear()
     Grid.Render()
-    // console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
+    console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
     // console.log('BP: ', BP)
     // console.log('char: ', char)
 
