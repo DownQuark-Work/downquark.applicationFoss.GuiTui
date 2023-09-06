@@ -79,7 +79,6 @@ const createSubSections = () => {
     convertedSectionCoordsMap[section.id] = [t,l,Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)]
     // check for ambiguity overlap here (phase 2)
 
-  
     const subGrid = Grid.Create.SubGrid([t,l],[Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)])
 
     Grid.Set.Cells({location:subGrid.subGridIndexes,value:section.fillCharacter||''})

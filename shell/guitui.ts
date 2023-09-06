@@ -1,4 +1,8 @@
+#!/usr/bin/env -S deno run --unstable -A
+
 // deno run --allow-read --allow-write --allow-run guitui.ts file-from-gui.toml
+// must chmod `./guitui.ts` first
+  // then allows for `./guitui.ts '../_notes/tui-sample.toml'`
 
 import { TomlType } from '../guitui.d.ts';
 import {parse} from './_deps.ts'
