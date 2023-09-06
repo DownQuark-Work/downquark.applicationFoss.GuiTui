@@ -46,23 +46,18 @@ const applyConfigs = () => {
         // leave dim for now - will apply focus during the next step anyway
       Grid.Set.Cells({location:horizontalBorder,value:chalq.dim(char.borderH)})
       Grid.Set.Cells({location:verticalBorder,value:chalq.dim(char.borderV)})
-      
+
       // add corner icons
-      // const curSubCoordMap = BP.SubSectionCoordsMap[subGrid].bounds
-      // console.log('cornerCoords: ', cornerCoords(curSubCoordMap))
-      
+      const {TL,TR,BL,BR} = BP.SubSectionCoordsMap[subGrid].tlbr
+      Grid.Set.Cells({location:[TL._i,TR._i,BL._i,BR._i],value:chalq.dim(char.borderCorner)})      
     }
   }
   
-  // InitActions()
+  InitActions()
   
-  if(DEBUG_GUITUI === 2){
-    // console.clear()
+  if(DEBUG_GUITUI < 2){
+    console.clear()
     Grid.Render()
-    // console.log('convertedSectionCoordsMap: ', BP.SubSectionCoordsMap)
-    // console.log('BP: ', BP)
-    // console.log('Grid.Get.Cells(): ', Grid.Set.Position([31, 9])._i)
-    // console.log('char: ', char)
   }
 }
 
@@ -119,10 +114,8 @@ const createSubSections = () => {
       bounds:[...convertedSectionCoords],
       tlbr:cornerCoords(convertedSectionCoords)
     }
-    console.log('BP.SubSectionCoordsMap: ', BP.SubSectionCoordsMap)
-
-    const subGrid = Grid.Create.SubGrid([t,l],[Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)])
     
+    const subGrid = Grid.Create.SubGrid([t,l],[Math.min(b,BP.DIMENSION.w-1),Math.min(r,BP.DIMENSION.h-1)])
     // store indexes
     BP.SubSectionGrids[section.id] = subGrid
     
