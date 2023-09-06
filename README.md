@@ -15,3 +15,21 @@ Create TUIs with a GUI
   - https://github.com/red-data-tools/YouPlot (graphs on terminal)
 
   - https://www.nngroup.com/articles/ux-mapping-cheat-sheet (diff graph type to think about [ search for: Service Blueprinting ])
+
+
+to reset
+```
+rm -rf modules && mkdir modules                                                                                                             rm .gitmodules                                                                                                                              rm -rf .git/modules/modules/
+```
+
+to add submodule from scratch (or after a reset):
+```
+% cd modules
+% git submodule add -b develop https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
+% git submodule init
+```
+  
+  To check out once `.gitmodules` has been added
+  `git clone --recursive https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git`
+  `git submodule add https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git modules/downquark.ventureCore.SubatomicModules`
+  
