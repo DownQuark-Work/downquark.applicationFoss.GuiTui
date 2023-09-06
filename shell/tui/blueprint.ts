@@ -1,5 +1,8 @@
-import {chalq, ensureFileSync} from '../_deps.ts'
+import { DEBUG_GUITUI } from "../_utils/_constants.ts";
 import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
+
+import { InitActions } from "./blueprint.actions.ts";
+
 import { TomlType } from '../../guitui.d.ts';
 
 type ConversionFncType = 
@@ -65,7 +68,7 @@ const createSubSections = () => {
   }
   
   const convertedSectionCoordsMap:{[k:string]:[number,number,number,number]} = {}
-  BP.TUI.sections.forEach(section => {
+  BP.TUI.sections?.forEach(section => {
     const coordPoint = atCoord(section.id,[section.x,section.y],[section.w,section.h])
     // below for phase 2 with optional w/h
     // const botRt = [section.w||null,section.h||null]
@@ -83,10 +86,13 @@ const createSubSections = () => {
 
     Grid.Set.Cells({location:subGrid.subGridIndexes,value:section.fillCharacter||''})
   });
-  // console.clear()
-  Grid.Render()
-  console.log('convertedSectionCoordsMap: ', convertedSectionCoordsMap)
-  console.log('BP: ', BP)
+
+  InitActions()
+  
+  if(DEBUG_GUITUI < 2){
+    console.log('convertedSectionCoordsMap: ', convertedSectionCoordsMap)
+    console.log('BP: ', BP)
+  }
 }
 
 export const Init = (tuiData:TomlType) => {
@@ -99,7 +105,5 @@ export const Init = (tuiData:TomlType) => {
   })
   Grid.Create.Initial()
 
-  tuiData.sections?.length
-  ? createSubSections()
-  : Grid.Render()
+  createSubSections()
 }
