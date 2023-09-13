@@ -49,8 +49,7 @@ const _getContent = (location:number[]) => {
 }
 const _setIdActive = (id?:string) => {
   if(id) { _content.idActive = id; return } // set directly
-  
-  cycleActiveSection()
+  cycleActiveSection() // else auto-cycle to next section defined by the TOML
 }
 const _setContent = (location:number[],value:OneOrMany<string>) => {
   Grid.Set.Cells({ location,value })
@@ -58,23 +57,13 @@ const _setContent = (location:number[],value:OneOrMany<string>) => {
 
 const _configureInitialContent = () => {
   // get active id
-_BLUEPRINT.TUI.sections.forEach(section => {
-  if(section.active) _setIdActive(section.id)
-  !section.disabled && _content.idSections.push(section.id) // pointer for quick lookups (if enabled)
-})
-_content.totalChars = _BLUEPRINT.DIMENSION.h * _BLUEPRINT.DIMENSION.w
-if(!_content.idActive) return // if no active id there is nothing to memoize and/or no reason for highlight
-
-cycleActiveSection()
-
-// const currentActiveContentIndexes = _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes
-// _content.current = _getContent(currentActiveContentIndexes)
-// // console.log('_content: ', _content)
-// // console.log('_setActiveUI: ', UI.Active(_content.current))
-// // console.log('_setInactive: ', UI.Base(UI.Inactive(_content.current)))
-// _setContent(currentActiveContentIndexes,UI.Active(_content.current))
-// // _replit()
-// // console.log('configured: ', _content, _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes)
+  _BLUEPRINT.TUI.sections.forEach(section => {
+    if(section.active) _setIdActive(section.id)
+    !section.disabled && _content.idSections.push(section.id) // pointer for quick lookups (when section is enabled)
+  })
+  _content.totalChars = _BLUEPRINT.DIMENSION.h * _BLUEPRINT.DIMENSION.w
+  if(!_content.idActive) return // if no active id there is nothing to memoize and/or no reason for highlight
+  cycleActiveSection()
 }
 
 export const Content = {
