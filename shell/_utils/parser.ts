@@ -37,5 +37,7 @@ export const parseDynamicScripts = async () => {
  * - [ ] we need to make the ability to call a custom command
  * - [ ] we need to have one more templated method that provides the 
  *   handshake for updating content from the script files
+ *   - [ ] any file should be able to update any section's content by specifying the id
+ *     although it would be for the current selected section by default
  * Those should both live here because this holds the go-between methods
  */
