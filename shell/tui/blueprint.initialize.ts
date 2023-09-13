@@ -32,7 +32,7 @@ const applyConfigs = () => {
 
       // add corner icons
       const {TL,TR,BL,BR} = BP.SubSectionCoordsMap[subGrid].tlbr
-      Grid.Set.Cells({location:[TL._i,TR._i,BL._i,BR._i],value:chalq.dim(char.borderCorner)})      
+      Grid.Set.Cells({location:[TL._i,TR._i,BL._i,BR._i],value:chalq.dim(char.borderCorner)})
     }
   }
 }
@@ -95,8 +95,7 @@ const createSubSections = () => {
     // store indexes
     BP.SubSectionGrids[section.id] = subGrid
     
-    const styledVal = section.active ? section.fillCharacter||'' : chalq.dim(section.fillCharacter||'')
-    Grid.Set.Cells({location:subGrid.subGridIndexes,value:styledVal})
+    Grid.Set.Cells({location:subGrid.subGridIndexes,value:chalq.dim(section.fillCharacter||'')})
   });
 
   applyConfigs()
