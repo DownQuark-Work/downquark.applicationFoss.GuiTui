@@ -19,7 +19,7 @@ const _content:ContentType = {
   totalChars:0,
 }
 
-const _replit = () => {
+const _replit = () => {return
   console.clear()
   Grid.Render()
 }

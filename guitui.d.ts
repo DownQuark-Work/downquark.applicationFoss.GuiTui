@@ -1,6 +1,7 @@
 import { EnumConfigSetup, TLBR_KEY_INDEX_ENUM } from "./shell/_utils/_constants.ts"
 
 export type CreateMutable<T> = { -readonly [P in keyof T]: T[P]; };
+export type KeyValueType<T> = {[k:string]:T}
 export type OneOrMany<T> = T | T[];
 export type OrNull<T> = T|null
 

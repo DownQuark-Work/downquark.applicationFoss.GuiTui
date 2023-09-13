@@ -4,7 +4,4 @@ const validateVersion = (persistedVersion:string) => {
   console.log('persistedVersion: ', persistedVersion, VERSION_GUITUI)
 }
 
-export const loadTomlFile = (path:string) => {
-  const tomlData = Deno.readTextFileSync(path)
-  return tomlData
-}
+export const loadSrcFile = (path:string) => Deno.readTextFileSync(path)
