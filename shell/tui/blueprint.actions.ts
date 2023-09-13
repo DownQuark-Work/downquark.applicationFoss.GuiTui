@@ -3,11 +3,13 @@ import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/
 
 import { char } from "../_utils/characters.ts";
 import { processKeyPress } from "../interactions/keyboard.ts";
+import { _BLUEPRINT } from "./blueprint.ts";
 
 const { Grid } = UtilsGrid
   export const InitActions = () => {
     console.clear()
-    Grid.Render()
+    // Grid.Render()
+    console.log('_BLUEPRINT: ', _BLUEPRINT)
     // console.log('char: ', char)
 
     // listens for keyboard events

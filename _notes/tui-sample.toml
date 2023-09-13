@@ -32,6 +32,7 @@ scriptSrc='./ln.sh'
 id="2"
 label='Footer Data'
 active=false
+# disabled=true # this key prevents the ability to tab and select the section
 fillCharacter='∆'
 x=0
 y=90
@@ -55,3 +56,4 @@ scriptSrc='./main.sh'
 [CONFIG]
 FILL_CHARACTER = 'z'
 RENDER = ['SCROLLABLE_SECTION_WITH_BORDER']
+SCRIPT_SOURCE = './global.sh' # this script would set global listeners, etc

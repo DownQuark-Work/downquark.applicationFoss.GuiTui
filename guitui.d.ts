@@ -6,6 +6,7 @@ type TomlSectionType = {
   id: string,
   label: string,
   active: boolean,
+  disabled?: boolean,
   fillCharacter?: string,
   x: number|string|Array<number|string>,
   y: number|string|Array<number|string>,
