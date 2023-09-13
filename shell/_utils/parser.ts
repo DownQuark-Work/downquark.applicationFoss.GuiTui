@@ -22,11 +22,20 @@ export const parseDynamicScripts = async () => {
       sectionScript._INIT() // initialize dynamic imports
     else { // initialize shell scripts
       // make sure scripts are executable
-      const chmod=Deno.run({ cmd: shellParams(sectionScript)._CHMOD })
+      const chmod = Deno.run({ cmd: shellParams(sectionScript)._CHMOD })
       await chmod.status()
       // run the init function
-      const init=Deno.run({ cmd: shellParams(sectionScript).INIT })
+      const init = Deno.run({ cmd: shellParams(sectionScript).INIT })
       await init.status()
     }
   })
 }
+
+/**
+ * TODO:
+ * above are the main calls from the template files
+ * - [ ] we need to make the ability to call a custom command
+ * - [ ] we need to have one more templated method that provides the 
+ *   handshake for updating content from the script files
+ * Those should both live here because this holds the go-between methods
+ */
