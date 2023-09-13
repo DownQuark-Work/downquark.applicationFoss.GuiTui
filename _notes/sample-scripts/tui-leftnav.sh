@@ -19,3 +19,18 @@ case $1 in
 esac
 
 echo tui-leftnav ACTION: $ACTION
+
+SomethingCustom="NOT set yet"
+function InitFnc {
+  echo Running init function: $SomethingCustom
+}
+
+if [ "$ACTION" == "init" ]; then
+  echo Initial Value: $SomethingCustom
+  SomethingCustom="POC"
+  InitFnc
+elif [ $ACTION == "section-blur" ]; then
+	echo create and run SectionBlur method
+elif [ $ACTION == "section-focus" ]; then
+  echo create and run SectionFocus method
+fi
