@@ -32,9 +32,8 @@ const cycleActiveSection = () => {
 
   if(_content.current) { // remove the styling from the current section
     const currentActiveContentIndexes = _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes
-    _setContent(currentActiveContentIndexes,UI.Inactive(_content.current))
-    // and update the current section pointer (_content.idActive)
-    _setIdActive(nextActiveSection)
+    _setContent(currentActiveContentIndexes,UI.Inactive(_content.current)) // set inactive styling to section being navigated away from
+    _setIdActive(nextActiveSection) // update `_content.idActive` to be the the section being navigated to
   }
   
   const nextActiveContentIndexes = _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes
