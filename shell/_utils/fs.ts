@@ -21,7 +21,7 @@ const loadScriptByType = async (fileName:string) => {
   
   return isDynamicImport
     ? await import('../'+fileName)
-    : loadSrcFile(fileName)
+    : fileName.replace('/./','/')
 }
 export const LoadDynamicScripts = async () => {
   if(Object.keys(SECTION_SCRIPTS).length) return // failsafe: scripts have already been loaded

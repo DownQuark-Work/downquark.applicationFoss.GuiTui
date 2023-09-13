@@ -1,14 +1,21 @@
-export const _INIT = () => {
-  console.log('INITTING: ', Date.now())
-}
+#!/usr/bin/env bash
 
-export const _ON_SECTION_BLUR = () => {
-  console.log('_ON_SECTION_BLUR: ')
-  // will be called _only_ when this section has focus
-  // however, it will trigger each time
-  // same with the focus function below
-}
+### USAGE:
+# ./tui-leftnav.sh init
+# ./tui-leftnav.sh -section blur
+# ./tui-leftnav.sh -section focus
 
-export const _ON_SECTION_FOCUS = () => {
-  console.log('_ON_SECTION_FOCUS: ')
-}
+
+echo Running tui-leftnav $@
+
+case $1 in 
+	"init")
+		ACTION="init"
+	;;
+
+	"-section")
+		ACTION="section-$2"
+	;;	
+esac
+
+echo tui-leftnav ACTION: $ACTION
