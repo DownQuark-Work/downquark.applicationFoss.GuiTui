@@ -1,8 +1,7 @@
 import { KeyCodeType, keyParse } from '../_deps.ts'
 
-// import {handleParsedKeyboardEvent} from '../tui/dashboard.ts'
-
-async function* keypress(): AsyncGenerator<KeyCodeType, void> {
+type keyPressType = AsyncGenerator<KeyCodeType, void>
+async function* keypress(): keyPressType {
   while (true) {
     const data = new Uint8Array(8)
 
@@ -17,14 +16,15 @@ async function* keypress(): AsyncGenerator<KeyCodeType, void> {
   }
 }
 
-export const processKeyPress = async () => {
-  console.log("Hit ctrl + c to exit.")
+export const processKeyPress = async (cb?:(key:KeyCodeType)=>void) => {
+  // console.log("Hit ctrl + c to exit.")
   for await (const key of keypress()) {
     if (key.ctrl && key.name === "c") {
       console.log("exit")
       break
     }
-    console.log('key: ', key)
+    // console.log('key: ', key)
+    cb && cb(key)
     // handleParsedKeyboardEvent(key)
   }
 }

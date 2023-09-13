@@ -2,7 +2,7 @@ import { DEBUG_GUITUI, EnumConfigSetup } from "../_utils/_constants.ts";
 import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
 
 import { InitBlueprint } from "./blueprint.initialize.ts";
-import { InitActions } from "./blueprint.actions.ts";
+import { ApplyActions } from "./blueprint.actions.ts";
 
 import { BluePrintType,TomlType } from '../../guitui.d.ts';
 
@@ -22,6 +22,12 @@ export const _BLUEPRINT:BluePrintType = {
         TUI,
       }
 
+const replit = () => {
+  console.clear()
+  Grid.Render()
+  console.log('Grid.Get.Cells(): ', Grid.Get.Cells())
+}
+
 export const Init = (tuiData:TomlType) => {
   // Basic configuration and setup
   _BLUEPRINT.TUI = tuiData
@@ -34,4 +40,7 @@ export const Init = (tuiData:TomlType) => {
   Grid.Create.Initial()
 
   InitBlueprint()
+  ApplyActions()
+  
+  replit()
 }

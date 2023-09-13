@@ -1,13 +1,10 @@
-import { DEBUG_GUITUI, EnumConfigSetup } from "../_utils/_constants.ts";
+import { EnumConfigSetup } from "../_utils/_constants.ts";
 import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
 import { _BLUEPRINT as BP } from "./blueprint.ts";
 
 import { chalq } from "../_deps.ts";
 import { char } from "../_utils/characters.ts";
 import { cornerCoords } from "../_utils/grid.ts";
-import { InitActions } from "./blueprint.actions.ts";
-
-import { BluePrintType,TomlType } from '../../guitui.d.ts';
 
 type ConversionFncType = 
   (id:string,tl:[string|number|Array<string|number>,string|number|Array<string|number>],br:[string|number|Array<string|number>,string|number|Array<string|number>])
@@ -37,13 +34,6 @@ const applyConfigs = () => {
       const {TL,TR,BL,BR} = BP.SubSectionCoordsMap[subGrid].tlbr
       Grid.Set.Cells({location:[TL._i,TR._i,BL._i,BR._i],value:chalq.dim(char.borderCorner)})      
     }
-  }
-  
-  InitActions()
-  
-  if(DEBUG_GUITUI < 2){
-    console.clear()
-    Grid.Render()
   }
 }
 
