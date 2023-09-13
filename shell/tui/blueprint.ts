@@ -14,7 +14,7 @@ const { Grid } = UtilsGrid,
       }
 export const _BLUEPRINT:BluePrintType = {
         DIMENSION: {
-          h: Deno.consoleSize().rows,
+          h: Deno.consoleSize().rows-2, // -2 for cursor and line break after render
           w: Deno.consoleSize().columns,
         },
         SubSectionCoordsMap:{},
@@ -35,5 +35,6 @@ export const Init = (tuiData:TomlType) => {
 
   InitBlueprint()
   ApplyActions()
+
   Content.Set.Initial()
 }

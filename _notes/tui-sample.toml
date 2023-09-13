@@ -14,7 +14,7 @@ fillCharacter='∑'
 x=0
 y=0
 w=100
-h=15
+h=14
 scriptSrc='./tm.sh'
 
 [[sections]]
@@ -35,7 +35,7 @@ active=false
 # disabled=true # this key prevents the ability to tab and select the section
 fillCharacter='∆'
 x=0
-y=90
+y=89
 w=100
 h=10
 scriptSrc='./fc.sh'
