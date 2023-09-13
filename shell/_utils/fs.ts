@@ -10,7 +10,7 @@ const validateVersion = (persistedVersion:string) => {
 
 export const loadSrcFile = (path:string) => Deno.readTextFileSync(path)
 
-const asyncForEach = async (arr, cb) => {
+const asyncForEach = async (arr:Array<[string,string]>, cb:Function) => {
   for (let i = 0; i < arr.length; i++) {
     await cb(arr[i]);
   }
