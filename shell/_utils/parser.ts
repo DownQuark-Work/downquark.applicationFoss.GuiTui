@@ -14,9 +14,7 @@ const shellParams = (sh:string) => ({
     BLUR:[sh,'-section','blur',],
     FOCUS:[sh,'-section','focus'],
   },
-  })
-  // const p=Deno.run({ cmd: ["../_notes/sample-scripts/tui-footer.sh","-section","blur",] });
-  // await p.status();
+})
 
 
 export const parseDynamicScripts = async () => {
