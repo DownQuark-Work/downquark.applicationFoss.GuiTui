@@ -1,1 +1,1 @@
-FOOT
+export const A='FOOT'

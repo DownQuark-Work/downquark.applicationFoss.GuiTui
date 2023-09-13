@@ -1,1 +1,1 @@
-GLOBAL
+export const A='GLOBAL'

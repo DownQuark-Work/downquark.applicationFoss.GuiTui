@@ -1,1 +1,1 @@
-LEFTNAV
+export const A='LEFT'

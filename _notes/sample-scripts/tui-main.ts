@@ -1,1 +1,1 @@
-MAIN
+export const A='MAIN'

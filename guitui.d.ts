@@ -29,6 +29,7 @@ export type TomlType =  {
   sections: TomlSectionType[],
   CONFIG?: {
     RENDER?: EnumConfigSetup[],
+    SCRIPT_SOURCE?: string,
     [k:string]:unknown}
 }
 

@@ -1,7 +1,4 @@
 import { _BLUEPRINT } from "./blueprint.ts";
-import { SECTION_SCRIPTS } from "../_utils/grid.ts";
-import { loadSrcFile } from "../_utils/fs.ts";
-import { parseDynamicScripts } from "../_utils/parser.ts";
 import {
   keyPressReturnType,
   processKeyPress,
@@ -27,25 +24,23 @@ export const ApplyActions = () => {
   processKeyPress(handleParsedKeyboardEvent)
 }
 
-export const LoadScripts = () => {
-  if(!SECTION_SCRIPTS.srcDir) {
-    const tomlFilePath = (Deno.args?.[0] as string).split('/')
-    tomlFilePath.pop()
-    SECTION_SCRIPTS.srcDir = tomlFilePath.join('/')+'/'
-  }
-  if(_BLUEPRINT.TUI.CONFIG?.SCRIPT_SOURCE){ // handle global
-    SECTION_SCRIPTS._global = loadSrcFile(SECTION_SCRIPTS.srcDir+_BLUEPRINT.TUI.CONFIG?.SCRIPT_SOURCE)
-  }
-  _BLUEPRINT.TUI.sections.forEach(section => {
-    if(section.scriptSrc)
-      SECTION_SCRIPTS[section.id] = loadSrcFile(SECTION_SCRIPTS.srcDir+section.scriptSrc)
-  })
-}
-export const ParseScripts = () => {
-  console.log('parsing dynamics');
-  parseDynamicScripts()
-  console.log('SECTION_SCRIPTS: ', SECTION_SCRIPTS)
-}
+// export const LoadScripts = () => {
+//   if(Object.keys(SECTION_SCRIPTS).length) return // failsafe: scripts have already been loaded
+  
+//   const tomlFilePath = (Deno.args?.[0] as string).split('/')
+//   tomlFilePath.pop()
+//   const srcDir = tomlFilePath.join('/')+'/'
+
+//   if(_BLUEPRINT.TUI.CONFIG?.SCRIPT_SOURCE) // handle global
+//     SECTION_SCRIPTS._global = loadSrcFile(srcDir+_BLUEPRINT.TUI.CONFIG?.SCRIPT_SOURCE)
+  
+//   _BLUEPRINT.TUI.sections.forEach(section => {
+//     if(section.scriptSrc) // load scripts for all applicable sections
+//       SECTION_SCRIPTS[section.id] = loadSrcFile(srcDir+section.scriptSrc)
+//   })
+
+//   parseDynamicScripts()
+// }
 
 export const ScrollSection:ScrollSectionType = ({section,content,offset}) => {
   console.log('{section,content,offset}: ', section,content,offset)

@@ -21,4 +21,4 @@ export const cornerCoords = (tlbr:[number,number,number,number], removeAdjacent=
   return rawObj
 }
 
-export const SECTION_SCRIPTS:KeyValueType<string> = {}
+export const SECTION_SCRIPTS:KeyValueType<unknown> = {}
