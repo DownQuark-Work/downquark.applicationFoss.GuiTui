@@ -34,6 +34,6 @@ export const Init = (tuiData:TomlType) => {
   Grid.Create.Initial()
 
   InitBlueprint()
-  Content.Set.Initial()
   ApplyActions()
+  Content.Set.Initial()
 }
