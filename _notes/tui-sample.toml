@@ -1,6 +1,6 @@
 # Sample data for (G|T)UI development
 project = "GuiTui Sample"
-created = "Date.now()"
+created = 1694588767774
 version = "0.0.1"
 
 [owner]
