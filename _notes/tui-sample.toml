@@ -7,7 +7,7 @@ version = "0.0.1"
 "@" = "mlnck"
 
 [[sections]]
-id="0"
+id="0-top"
 label='Top Menu'
 active=true
 fillCharacter='∑'
@@ -18,7 +18,7 @@ h=15
 scriptSrc='./tm.sh'
 
 [[sections]]
-id="1"
+id="1-leftnav"
 label='Left Nav'
 active=false
 fillCharacter='+'
@@ -29,7 +29,7 @@ h=70
 scriptSrc='./ln.sh'
 
 [[sections]]
-id="2"
+id="2-footer"
 label='Footer Data'
 active=false
 # disabled=true # this key prevents the ability to tab and select the section
@@ -41,7 +41,7 @@ h=10
 scriptSrc='./fc.sh'
 
 [[sections]]
-id="3"
+id="3-main"
 label='Main Content'
 active=false
 fillCharacter='?'

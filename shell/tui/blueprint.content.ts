@@ -6,7 +6,7 @@ import { OneOrMany, OrNull } from "../../guitui.d.ts";
 
 type ContentType = {
   current:OrNull<string[]>,
-  idActive:OrNull<string|number>,
+  idActive:OrNull<string>,
   idSections:string[],
   totalChars:number,
 }
@@ -22,17 +22,38 @@ const _content:ContentType = {
 const _replit = () => {
   console.clear()
   Grid.Render()
-  // console.log('Grid.Get.Cells(): ', Grid.Get.Cells())
+}
+
+const cycleActiveSection = () => {
+  if(!_content.idActive) return // failsafe
+
+  const curActiveIndex = _content.idSections.indexOf(_content.idActive), // cycle through sections
+        nextActiveSection = _content.idSections[curActiveIndex+1] || _content.idSections[0] // loop
+
+  if(_content.current) { // remove the styling from the current section
+    const currentActiveContentIndexes = _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes
+    _setContent(currentActiveContentIndexes,UI.Inactive(_content.current))
+    // and update the current section pointer (_content.idActive)
+    _setIdActive(nextActiveSection)
+  }
+  
+  const nextActiveContentIndexes = _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes
+  _content.current = _getContent(nextActiveContentIndexes) // update current stored content
+  
+  _setContent(nextActiveContentIndexes,UI.Active(_content.current)) // set styles to new section
+
+  _replit() // update shell
 }
 
 const _getContent = (location:number[]) => {
   return Grid.Get.Cells({location}) as string[]
 }
-const _setIdActive = (id:string|number) => {
-  _content.idActive = id
+const _setIdActive = (id?:string) => {
+  if(id) { _content.idActive = id; return } // set directly
+  
+  cycleActiveSection()
 }
 const _setContent = (location:number[],value:OneOrMany<string>) => {
-  // console.log('seting: ', content)
   Grid.Set.Cells({ location,value })
 }
 
@@ -40,20 +61,21 @@ const _configureInitialContent = () => {
   // get active id
 _BLUEPRINT.TUI.sections.forEach(section => {
   if(section.active) _setIdActive(section.id)
-  _content.idSections.push(section.id) // pointer for quick lookups
+  !section.disabled && _content.idSections.push(section.id) // pointer for quick lookups (if enabled)
 })
 _content.totalChars = _BLUEPRINT.DIMENSION.h * _BLUEPRINT.DIMENSION.w
 if(!_content.idActive) return // if no active id there is nothing to memoize and/or no reason for highlight
 
-const currentActiveContentIndexes = _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes
-// _content.current = Grid.Get.Cells({location:currentActiveContentIndexes}) as string[]
-_content.current = _getContent(currentActiveContentIndexes)
-// console.log('_content: ', _content)
-// console.log('_setActiveUI: ', UI.Active(_content.current))
-// console.log('_setInactive: ', UI.Base(UI.Inactive(_content.current)))
-_setContent(currentActiveContentIndexes,UI.Active(_content.current))
-_replit()
-// console.log('configured: ', _content, _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes)
+cycleActiveSection()
+
+// const currentActiveContentIndexes = _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes
+// _content.current = _getContent(currentActiveContentIndexes)
+// // console.log('_content: ', _content)
+// // console.log('_setActiveUI: ', UI.Active(_content.current))
+// // console.log('_setInactive: ', UI.Base(UI.Inactive(_content.current)))
+// _setContent(currentActiveContentIndexes,UI.Active(_content.current))
+// // _replit()
+// // console.log('configured: ', _content, _BLUEPRINT.SubSectionGrids[_content.idActive].subGridIndexes)
 }
 
 export const Content = {
