@@ -1,15 +1,14 @@
-import { DEBUG_GUITUI } from "../_utils/_constants.ts";
 import { _BLUEPRINT } from "./blueprint.ts";
+import { RESERVED_KEYPRESS, isKey, processKeyPress } from "../interactions/keyboard.ts";
 
-import { char } from "../_utils/characters.ts";
-import { processKeyPress } from "../interactions/keyboard.ts";
+import { KeyCodeType } from "../_deps.ts";
 
-const handleParsedKeyboardEvent = (key:any) => {
+const handleParsedKeyboardEvent = (key:KeyCodeType) => {
   // console.clear()
   // Grid.Render()
   // console.log('ApplyActions _BLUEPRINT: ', _BLUEPRINT)
-  // console.log('char: ', char)
   console.log('handleParsedKeyboardEvent: ', key)
+  console.log('Tab?: ', isKey(key,RESERVED_KEYPRESS.TAB))
 }
 
 export const ApplyActions = () => {
