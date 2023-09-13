@@ -9,7 +9,7 @@ version = "0.0.1"
 [[sections]]
 id="0"
 label='Top Menu'
-active=true
+active=false
 fillCharacter='∑'
 x=0
 y=0
@@ -31,7 +31,7 @@ scriptSrc='./ln.sh'
 [[sections]]
 id="2"
 label='Footer Data'
-active=false
+active=true
 # disabled=true # this key prevents the ability to tab and select the section
 fillCharacter='∆'
 x=0

@@ -43,7 +43,10 @@ export type BluePrintType = {
     h: number,
     w: number,
   },
-  SubSectionGrids:{[k:string]:unknown},
+  SubSectionGrids:{
+    [k:string]:{
+      subGridIndexes:number[],
+    }},
   SubSectionCoordsMap:{[k:string]:{
       bounds:[number,number,number,number]
       tlbr:TLBRobjWithEnumKeyType,

@@ -22,12 +22,6 @@ export const _BLUEPRINT:BluePrintType = {
         TUI,
       }
 
-const replit = () => {
-  console.clear()
-  Grid.Render()
-  // console.log('Grid.Get.Cells(): ', Grid.Get.Cells())
-}
-
 export const Init = (tuiData:TomlType) => {
   // Basic configuration and setup
   _BLUEPRINT.TUI = tuiData
@@ -42,6 +36,4 @@ export const Init = (tuiData:TomlType) => {
   InitBlueprint()
   Content.Set.Initial()
   ApplyActions()
-  
-  // replit()
 }
