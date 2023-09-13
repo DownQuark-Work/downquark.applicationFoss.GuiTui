@@ -1,7 +1,7 @@
 import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
 
 import { InitBlueprint } from './blueprint.initialize.ts';
-import { ApplyActions, LoadScripts } from './blueprint.actions.ts';
+import { ApplyActions, LoadScripts, ParseScripts } from './blueprint.actions.ts';
 import { Content } from './blueprint.content.ts'
 
 import { BluePrintType,TomlType } from '../../guitui.d.ts';
@@ -36,6 +36,7 @@ export const Init = (tuiData:TomlType) => {
   InitBlueprint()
   LoadScripts()
   ApplyActions()
+  ParseScripts()
 
   Content.Set.Initial()
 }

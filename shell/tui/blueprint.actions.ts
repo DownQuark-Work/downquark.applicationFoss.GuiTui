@@ -1,6 +1,7 @@
 import { _BLUEPRINT } from "./blueprint.ts";
 import { SECTION_SCRIPTS } from "../_utils/grid.ts";
 import { loadSrcFile } from "../_utils/fs.ts";
+import { parseDynamicScripts } from "../_utils/parser.ts";
 import {
   keyPressReturnType,
   processKeyPress,
@@ -39,6 +40,11 @@ export const LoadScripts = () => {
     if(section.scriptSrc)
       SECTION_SCRIPTS[section.id] = loadSrcFile(SECTION_SCRIPTS.srcDir+section.scriptSrc)
   })
+}
+export const ParseScripts = () => {
+  console.log('parsing dynamics');
+  parseDynamicScripts()
+  console.log('SECTION_SCRIPTS: ', SECTION_SCRIPTS)
 }
 
 export const ScrollSection:ScrollSectionType = ({section,content,offset}) => {
