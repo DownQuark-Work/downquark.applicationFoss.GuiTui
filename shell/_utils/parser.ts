@@ -2,7 +2,7 @@ type rawArgsType = {[x: string]: unknown; _: string[]; '--': string[];}
 
 import {loadSrcFile} from './fs.ts'
 import { stringify, parse } from '../../modules/downquark.ventureCore.SubatomicModules/external/iarna-toml/toml-esm.mjs'
-import { SECTION_SCRIPTS } from './grid.ts';
+import { SECTION_SCRIPTS } from './grid.ts'
 
 const _parseToml = (rawData:string) => parse(rawData)
 export const parseArgs = (rawArgs:string[]) => _parseToml(loadSrcFile(rawArgs[0]))
@@ -16,19 +16,17 @@ const shellParams = (sh:string) => ({
   },
 })
 
-
 export const parseDynamicScripts = async () => {
-  console.log('SECTION_SCRIPTS: ', SECTION_SCRIPTS)
   Object.values(SECTION_SCRIPTS).forEach(async sectionScript => {
     if(typeof sectionScript !== 'string')
       sectionScript._INIT() // initialize dynamic imports
     else { // initialize shell scripts
       // make sure scripts are executable
-      const chmod=Deno.run({ cmd: shellParams(sectionScript)._CHMOD });
-      await chmod.status();
+      const chmod=Deno.run({ cmd: shellParams(sectionScript)._CHMOD })
+      await chmod.status()
       // run the init function
-      const init=Deno.run({ cmd: shellParams(sectionScript).INIT });
-      await init.status();
+      const init=Deno.run({ cmd: shellParams(sectionScript).INIT })
+      await init.status()
     }
   })
 }
