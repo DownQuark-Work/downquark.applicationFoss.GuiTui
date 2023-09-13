@@ -41,7 +41,7 @@ export const runScriptCommand = async (section:string,command:OneOrMany<string>,
   const sectionScript = SECTION_SCRIPTS[section]
   if(sectionScript[command as string]) { // dynamic import
     const retVal = sectionScript[command as string](commandArgs)
-    retVal && cb && cb(retVal)
+    if(cb) retVal ? cb(retVal) : cb()
   }
   else { // shell script
     const cmd = [sectionScript,...command] as string[] // force a file to be referenced, no anonymous `Deno.run` calls
