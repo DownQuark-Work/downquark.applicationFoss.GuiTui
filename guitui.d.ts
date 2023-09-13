@@ -57,3 +57,10 @@ export type BluePrintType = {
   },
   TUI:TomlType,
 }
+
+type SectionScriptsType = {
+  _INIT:()=>void,
+  _ON_SECTION_BLUR:()=>void,
+  _ON_SECTION_FOCUS:()=>void,
+  [k:string]:any
+}

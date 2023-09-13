@@ -3,7 +3,7 @@
 import { COORDINATE_TLBR_ARRAY_INDEX_ENUM, TLBR_KEY_INDEX_ENUM } from "./_constants.ts"
 import { UtilsGrid } from "../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts"
 
-import { KeyValueType, TLBRobjWithEnumKeyType } from "../../guitui.d.ts";
+import { KeyValueType, TLBRobjWithEnumKeyType, SectionScriptsType } from "../../guitui.d.ts";
 
 export const cornerCoords = (tlbr:[number,number,number,number], removeAdjacent=true):TLBRobjWithEnumKeyType => {
   const rawObj:TLBRobjWithEnumKeyType = {
@@ -21,4 +21,4 @@ export const cornerCoords = (tlbr:[number,number,number,number], removeAdjacent=
   return rawObj
 }
 
-export const SECTION_SCRIPTS:KeyValueType<unknown> = {}
+export const SECTION_SCRIPTS:KeyValueType<SectionScriptsType> = {}

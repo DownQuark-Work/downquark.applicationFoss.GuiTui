@@ -8,7 +8,11 @@ const _parseToml = (rawData:string) => parse(rawData)
 export const parseArgs = (rawArgs:string[]) => _parseToml(loadSrcFile(rawArgs[0]))
 
 export const parseDynamicScripts = () => {
-  // scripts templates are being figured out
-  console.log('not sure yet');
-  console.log('SECTION_SCRIPTS: ', SECTION_SCRIPTS)
+  Object.values(SECTION_SCRIPTS).forEach(sectionScript => {
+    if(typeof sectionScript !== 'string')
+      sectionScript._INIT() // initialize dynamic imports
+    else // initialize shell scripts
+    console.log('initialize shell scripts: ')
+      // console.log(script)
+  })
 }
