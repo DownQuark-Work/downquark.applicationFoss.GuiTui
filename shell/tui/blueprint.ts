@@ -25,7 +25,7 @@ export const _BLUEPRINT:BluePrintType = {
 const replit = () => {
   console.clear()
   Grid.Render()
-  console.log('Grid.Get.Cells(): ', Grid.Get.Cells())
+  // console.log('Grid.Get.Cells(): ', Grid.Get.Cells())
 }
 
 export const Init = (tuiData:TomlType) => {

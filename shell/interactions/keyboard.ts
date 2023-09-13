@@ -1,19 +1,23 @@
 import { KeyCodeType, keyParse } from '../_deps.ts'
 
 type keyPressType = AsyncGenerator<KeyCodeType, void>
+type keyPressReturnFncType = (type:RESERVED_KEYPRESS)=>boolean
+export type keyPressReturnType = KeyCodeType & {isKey:keyPressReturnFncType}
 
 export enum RESERVED_KEYPRESS {
   TAB = 'TAB',
   QUIT = 'QUIT'
 }
-export const isKey = (k:KeyCodeType,type:RESERVED_KEYPRESS) => {
-  switch(type) {
-    case RESERVED_KEYPRESS.TAB:
-      return k.name === 'tab' && !(k.ctrl || k.meta || k.shift)
-    case RESERVED_KEYPRESS.QUIT:
-      return k.ctrl && k.name === 'c'
-    default:
-      return false
+export const isKey = (k:KeyCodeType) => {
+  return function(type:RESERVED_KEYPRESS) {
+    switch(type) {
+      case RESERVED_KEYPRESS.TAB:
+        return k.name === 'tab' && !(k.ctrl || k.meta || k.shift)
+      case RESERVED_KEYPRESS.QUIT:
+        return k.ctrl && k.name === 'c'
+      default:
+        return false
+    }
   }
 }
 
@@ -32,13 +36,15 @@ async function* keypress(): keyPressType {
   }
 }
 
-export const processKeyPress = async (cb?:(key:KeyCodeType)=>void) => {
+export const processKeyPress = async (cb?:(key:keyPressReturnType)=>void) => {
+  // export const processKeyPress = async (cb?:(key:KeyCodeType)=>void) => {
   // console.log("Hit ctrl + c to exit.")
   for await (const key of keypress()) {
-    if(isKey(key,RESERVED_KEYPRESS.QUIT)) {
+    const k:keyPressReturnType = {...key, isKey:isKey(key) as keyPressReturnFncType}
+    if(k.isKey(RESERVED_KEYPRESS.QUIT)) {
       console.log("exit")
       break
     }
-    cb && cb(key)
+    cb && cb(k)
   }
 }
