@@ -1,6 +1,7 @@
 import { EnumConfigSetup, TLBR_KEY_INDEX_ENUM } from "./shell/_utils/_constants.ts"
 
-export type CreateMutable<Type> = { -readonly [Property in keyof Type]: Type[Property]; };
+export type OrNull<T> = T|null
+export type CreateMutable<T> = { -readonly [P in keyof T]: T[P]; };
 
 type TomlSectionType = {
   id: string,
