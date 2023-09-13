@@ -4,6 +4,15 @@ type keyPressType = AsyncGenerator<KeyCodeType, void>
 type keyPressReturnFncType = (type:RESERVED_KEYPRESS)=>boolean
 export type keyPressReturnType = KeyCodeType & {isKey:keyPressReturnFncType}
 
+export const toggleCursor = async (hide=true) => {
+  // https://deno.land/x/cursor@v2.2.0/cursor.ts?source
+  const encoder = new TextEncoder();
+  if(hide)
+    await Deno.stdout.write(encoder.encode("\u001B[?25l")) // hide
+  else
+    await Deno.stdout.write(encoder.encode("\u001B[?25h")) // show
+}
+
 export enum RESERVED_KEYPRESS {
   TAB = 'TAB',
   QUIT = 'QUIT'
@@ -42,6 +51,7 @@ export const processKeyPress = async (cb?:(key:keyPressReturnType)=>void) => {
   for await (const key of keypress()) {
     const k:keyPressReturnType = {...key, isKey:isKey(key) as keyPressReturnFncType}
     if(k.isKey(RESERVED_KEYPRESS.QUIT)) {
+      await toggleCursor(false)
       console.log("exit")
       break
     }

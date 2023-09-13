@@ -1,7 +1,7 @@
 import { _BLUEPRINT } from "./blueprint.ts";
 import { RESERVED_KEYPRESS, processKeyPress } from "../interactions/keyboard.ts";
 
-import { keyPressReturnType } from "../interactions/keyboard.ts";
+import { keyPressReturnType, toggleCursor } from "../interactions/keyboard.ts";
 import { Content } from "./blueprint.content.ts";
 
 const handleParsedKeyboardEvent = (key:keyPressReturnType) => {
@@ -9,6 +9,7 @@ const handleParsedKeyboardEvent = (key:keyPressReturnType) => {
 }
 
 export const ApplyActions = () => {
+  toggleCursor()
   // listens for keyboard events
   //  and prevents the process from exiting
   processKeyPress(handleParsedKeyboardEvent)
