@@ -9,8 +9,11 @@ const handleParsedKeyboardEvent = (key:keyPressReturnType) => {
 }
 
 export const ApplyActions = () => {
-  toggleCursor()
-  // listens for keyboard events
-  //  and prevents the process from exiting
+  toggleCursor() // removes cursor from shell
+  
+  /** processKeyPress:
+   * listens for keyboard events
+   * - and prevents the process from exiting
+   */
   processKeyPress(handleParsedKeyboardEvent)
 }
