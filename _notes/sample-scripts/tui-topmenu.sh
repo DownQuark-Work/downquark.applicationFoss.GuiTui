@@ -15,7 +15,10 @@ case $1 in
 
 	"-section")
 		ACTION="section-$2"
-	;;	
+	;;
+	"-custom")
+		ACTION="custom-$2"
+	;;
 esac
 
 echo tui-topmenu ACTION: $ACTION
@@ -23,6 +26,10 @@ echo tui-topmenu ACTION: $ACTION
 SomethingCustom="NOT set yet"
 function InitFnc {
   echo Running init function: $SomethingCustom
+}
+
+function CustomFnc {
+	echo Running custom function: $1
 }
 
 if [ "$ACTION" == "init" ]; then
@@ -33,4 +40,6 @@ elif [ $ACTION == "section-blur" ]; then
 	echo create and run SectionBlur method
 elif [ $ACTION == "section-focus" ]; then
   echo create and run SectionFocus method
+elif [ $ACTION == "custom-top" ]; then
+  CustomFnc 'custom method prop'
 fi

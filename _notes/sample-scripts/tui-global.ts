@@ -1,3 +1,5 @@
+import { KeyValueType } from "../../guitui.d.ts";
+
 export const _INIT = () => {
   console.log('INITTING tui-global: ', Date.now())
 }
@@ -11,4 +13,10 @@ export const _ON_SECTION_BLUR = () => {
 
 export const _ON_SECTION_FOCUS = () => {
   console.log('tui-global _ON_SECTION_FOCUS: ')
+}
+
+export const CustomGlobalFunction = (props:KeyValueType<any>) => {
+  console.log('tui-global CustomGlobalFunction: ', props)
+
+  return 1342
 }
