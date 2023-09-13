@@ -41,7 +41,9 @@ export const LoadDynamicScripts = async () => {
   const asyncForEachWrapper = async () => {
     await asyncForEach(sectionScripts,async (curScript:[string,string]) => 
       SECTION_SCRIPTS[curScript[0]] = await loadScriptByType(srcDir+curScript[1]))
+      
     parseDynamicScripts()
   }
+
   asyncForEachWrapper()
 }
