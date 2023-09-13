@@ -23,7 +23,7 @@ label='Left Nav'
 active=false
 fillCharacter='+'
 x=0
-y=17 # if number then 16%
+y=16 # if number then 16%
 w="30" # if string then 30 characters
 h=70
 scriptSrc='./ln.sh'
@@ -45,11 +45,11 @@ label='Main Content'
 active=false
 fillCharacter='?'
 x="31"
-y=17
+y=16
 # if width/height omitted then fill remaining space (in phase 2)
 ## currently, if width/height omitted then throw error
 w=[100,"31"] # if array first value should be the largest dimension -> [startValue, ...subtractions]
-h=[100,18,11] # would not happenn when using GUI - but shows POC -- remember to add +1 for row which is filled (17-18)
+h=[100,16,11] # would not happenn when using GUI - but shows POC -- remember to add +1 for row which is filled (17-18)
 scriptSrc='./main.sh'
 
 [CONFIG]
