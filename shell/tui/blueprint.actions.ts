@@ -14,6 +14,10 @@ const handleParsedKeyboardEvent = (key:keyPressReturnType) => {
   key.isKey(RESERVED_KEYPRESS.TAB) && Content.Set.idActive()
 }
 
+export const handleParsedScriptEvent = (scriptEvent:any) => {
+  console.log('scriptEvent: ', scriptEvent)
+}
+
 export const ApplyActions = () => {
   toggleCursor() // removes cursor from shell
   

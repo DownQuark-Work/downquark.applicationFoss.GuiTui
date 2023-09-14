@@ -1,41 +1,63 @@
 // This is the file responsible for interacting with the dynamically
 // loaded `ts` or `sh` files and handling any side effects
 
-import { KeyValueType,OneOrMany,SectionScriptsType } from "../../guitui.d.ts";
+import { KeyValueType,OneOrMany,OrNull,SectionScriptsType } from "../../guitui.d.ts";
+import { handleParsedScriptEvent } from "../tui/blueprint.actions.ts";
 
 export const SECTION_SCRIPTS:KeyValueType<SectionScriptsType> = {}
 
-// export const
-
-export enum ApplyCallbackByNameEnum {
-  AUTO_UPDATE_CONTENT = 'AUTO_UPDATE_CONTENT',
-}
-
 interface RunScriptCommandInterface {
   (section:string,command:OneOrMany<string>,commandArgs?:KeyValueType<unknown>,cb?:Function):void
-  (section:string,command:OneOrMany<string>,commandArgs?:KeyValueType<unknown>,cb?:ApplyCallbackByNameEnum):void }
+  (section:string,command:OneOrMany<string>,commandArgs?:KeyValueType<unknown>,cb?:OneOrMany<ApplyCallbackByNameEnum>):void }
+
+export enum ApplyCallbackByNameEnum { // this should be used in conjunction with the default methods below
+  _DEBUG = '_DEBUG',
+  REQUEST_UPDATED_CONTENT_FROM_SCRIPT = 'REQUEST_UPDATED_CONTENT_FROM_SCRIPT',
+  UPDATE_CONTENT_ON_COMPLETION = 'UPDATE_CONTENT_ON_COMPLETION',
+}
+// The below are used for the templating system.
+// These methods can be no-op but will need to be created when we export the template files
+const parsedCommonParams = (sh:string='') => ({
+  DISPLAY_CONTENT: {
+    SH:[],TS:[]
+  },
+  REQ_UPDATE_CONTENT: {
+    SH:[';sh',sh],TS:['not',sh]
+  },
+})
 
 /**
- * 
  * helper methood to return common callbacks that
  * could otherwise be painful when dealing with the shell and dynamically loaded modules
  * @returns Function
  */
-const applyCallback = (cb:Function|ApplyCallbackByNameEnum):Function => {
+let hasAppliedCallback = false
+const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => {
+  hasAppliedCallback = false // reset each run
   if(typeof cb === 'function') return cb
+  hasAppliedCallback = true // something in the switch case matches and val persists
   switch (cb) {
-    case ApplyCallbackByNameEnum.AUTO_UPDATE_CONTENT:
-    return ()=>{}
+    case ApplyCallbackByNameEnum.REQUEST_UPDATED_CONTENT_FROM_SCRIPT:
+      return (section:string)=>parsedCommonParams(section).REQ_UPDATE_CONTENT
+    case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
+    return ()=>{} // 
   }
+  hasAppliedCallback = false // or no match and val resets
+  return null
 }
 
 export const runScriptCommand:RunScriptCommandInterface = async (section,command,commandArgs={},cb) => {
-  const callback = cb ? applyCallback(cb) : null
+   console.log('cb: ', cb)
+  const cbArg = (Array.isArray(cb)) ? cb.shift() : cb
+  const callback = cbArg ? applyCallback(cbArg) : null
+  console.log('callback: ', callback)
   const sectionScript = SECTION_SCRIPTS[section]
   if(sectionScript[command as string]) { // dynamic import
     const retVal = sectionScript[command as string](commandArgs)
     if(callback) {
-      retVal ? callback(retVal) : callback()
+      // retVal ? callback(retVal) : hasAppliedCallback ? callback(section) : callback()
+      // requested callback takes priority
+      hasAppliedCallback ? callback(section) : retVal ? callback(retVal) : callback()
     }
   }
   else { // shell script
@@ -45,6 +67,10 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
     if(commandArgs.stdout && commandArgs.stdout === 'piped'){
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
       callback && callback(pipedOutput)
+    }
+    else if(hasAppliedCallback) { // even if no pipe to await run callback if it was specified
+      console.log('section: ', section)
+      callback && console.log('callback: ', callback(section))
     }
   }
 }
