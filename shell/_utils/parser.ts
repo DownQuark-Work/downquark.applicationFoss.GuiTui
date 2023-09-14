@@ -21,6 +21,6 @@ export const parseDynamicScripts = () => { // allow shell files to be executable
     else
       runScriptCommand(sectionId,'_INIT',undefined,[...onInitCallbackChain])
   })
-  runScriptCommand('0-top',['-update','content'],{stdout: 'piped'},[ApplyCallbackByNameEnum.REQUEST_UPDATED_CONTENT_FROM_SCRIPT,(cntnt:any)=> {console.log('PIPING IT YO', cntnt)}])
+  runScriptCommand('0-top',['-update','content'],{stdout: 'piped'},[...onInitCallbackChain])
 
 }
