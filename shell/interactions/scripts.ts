@@ -17,12 +17,12 @@ export enum ApplyCallbackByNameEnum { // this should be used in conjunction with
 }
 // The below are used for the templating system.
 // These methods can be no-op but will need to be created when we export the template files
-const parsedCommonParams = (sh:string='') => ({
+const parsedCommonParams = (sh:string='',...args:any) => ({
   DISPLAY_CONTENT: {
     SH:[],TS:[]
   },
   REQ_UPDATE_CONTENT: {
-    SH:[';sh',sh],TS:['not',sh]
+    SH:[sh,';sh',...args],TS:['not',...args]
   },
 })
 
@@ -47,7 +47,7 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
 }
 
 export const runScriptCommand:RunScriptCommandInterface = async (section,command,commandArgs={},cb) => {
-   console.log('cb: ', cb)
+  console.log('cb: ', cb)
   const cbArg = (Array.isArray(cb)) ? cb.shift() : cb
   const callback = cbArg ? applyCallback(cbArg) : null
   console.log('callback: ', callback)
@@ -57,7 +57,10 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
     if(callback) {
       // retVal ? callback(retVal) : hasAppliedCallback ? callback(section) : callback()
       // requested callback takes priority
-      hasAppliedCallback ? callback(section) : retVal ? callback(retVal) : callback()
+      // hasAppliedCallback ? callback(section) : retVal ? callback(retVal) : callback()
+      if(hasAppliedCallback){ // send section and return val if applicable
+        retVal ? callback(section,retVal) : callback(section)
+      } else retVal ? callback(retVal) : callback()
     }
   }
   else { // shell script
@@ -66,7 +69,9 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
     await shellCmd.status()
     if(commandArgs.stdout && commandArgs.stdout === 'piped'){
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
-      callback && callback(pipedOutput)
+      if(callback) {
+        hasAppliedCallback ? callback(section,pipedOutput) : callback(pipedOutput)
+      } 
     }
     else if(hasAppliedCallback) { // even if no pipe to await run callback if it was specified
       console.log('section: ', section)
