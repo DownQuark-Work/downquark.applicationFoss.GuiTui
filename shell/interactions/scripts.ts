@@ -39,7 +39,8 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
   hasAppliedCallback = true // something in the switch case matches and val persists
   switch (cb) {
     case ApplyCallbackByNameEnum.REQUEST_UPDATED_CONTENT_FROM_SCRIPT:
-      return {fnc:parsedCommonParams} // (section:string,args:any)=>parsedCommonParams(section,args)
+      return parsedCommonParams
+      // return (section:string,args:any)=>parsedCommonParams(section,args)
     case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
     return null // ()=>{} // 
   }
@@ -50,7 +51,7 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
 export const runScriptCommand:RunScriptCommandInterface = async (section,command,commandArgs={},cb) => {
   console.log('cb: ', cb)
   const cbArg = (Array.isArray(cb)) ? cb.shift() : cb
-  const callback = cbArg ? applyCallback(cbArg).fnc : null
+  const callback = cbArg ? applyCallback(cbArg) : null
   console.log('callback: ', callback?.toString())
   const sectionScript = SECTION_SCRIPTS[section]
   if(sectionScript[command as string]) { // dynamic import
@@ -72,6 +73,7 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
       console.log('pipedOutput: ', pipedOutput, callback, 'xxxx',hasAppliedCallback)
       console.log('xcvxcvcvxcv',parsedCommonParams(section,pipedOutput))
+      console.log('1231232',callback(section,pipedOutput))
       if(callback) {
         hasAppliedCallback ? callback(section,pipedOutput) : callback(pipedOutput)
       } 
