@@ -17,12 +17,13 @@ export enum ApplyCallbackByNameEnum { // this should be used in conjunction with
 }
 // The below are used for the templating system.
 // These methods can be no-op but will need to be created when we export the template files
-const parsedCommonParams = (sh:string='',...args:any) => ({
+const parsedCommonParams = (sh:string='',args:any) => ({
   DISPLAY_CONTENT: {
     SH:[],TS:[]
   },
   REQ_UPDATE_CONTENT: {
-    SH:[sh,';sh',...args],TS:['not',...args]
+    args,
+    SH:[sh,';sh',args],TS:['not',args]
   },
 })
 
@@ -38,9 +39,9 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
   hasAppliedCallback = true // something in the switch case matches and val persists
   switch (cb) {
     case ApplyCallbackByNameEnum.REQUEST_UPDATED_CONTENT_FROM_SCRIPT:
-      return (section:string)=>parsedCommonParams(section).REQ_UPDATE_CONTENT
+      return {fnc:parsedCommonParams} // (section:string,args:any)=>parsedCommonParams(section,args)
     case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
-    return ()=>{} // 
+    return null // ()=>{} // 
   }
   hasAppliedCallback = false // or no match and val resets
   return null
@@ -49,8 +50,8 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
 export const runScriptCommand:RunScriptCommandInterface = async (section,command,commandArgs={},cb) => {
   console.log('cb: ', cb)
   const cbArg = (Array.isArray(cb)) ? cb.shift() : cb
-  const callback = cbArg ? applyCallback(cbArg) : null
-  console.log('callback: ', callback)
+  const callback = cbArg ? applyCallback(cbArg).fnc : null
+  console.log('callback: ', callback?.toString())
   const sectionScript = SECTION_SCRIPTS[section]
   if(sectionScript[command as string]) { // dynamic import
     const retVal = sectionScript[command as string](commandArgs)
@@ -69,6 +70,8 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
     await shellCmd.status()
     if(commandArgs.stdout && commandArgs.stdout === 'piped'){
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
+      console.log('pipedOutput: ', pipedOutput, callback, 'xxxx',hasAppliedCallback)
+      console.log('xcvxcvcvxcv',parsedCommonParams(section,pipedOutput))
       if(callback) {
         hasAppliedCallback ? callback(section,pipedOutput) : callback(pipedOutput)
       } 
