@@ -1,6 +1,6 @@
 import {DOWNQUARK_FILE_EXTENSION, VERSION_GUITUI} from './_constants.ts'
 import { _BLUEPRINT } from '../tui/blueprint.ts'
-import { SECTION_SCRIPTS } from './grid.ts'
+import { SECTION_SCRIPTS } from '../interactions/scripts.ts'
 
 import { parseDynamicScripts } from './parser.ts'
 
