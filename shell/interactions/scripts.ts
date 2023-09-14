@@ -5,11 +5,38 @@ import { KeyValueType,OneOrMany,SectionScriptsType } from "../../guitui.d.ts";
 
 export const SECTION_SCRIPTS:KeyValueType<SectionScriptsType> = {}
 
-export const runScriptCommand = async (section:string,command:OneOrMany<string>,commandArgs:KeyValueType<unknown>={},cb?:Function) => {
+// export const
+
+export enum ApplyCallbackByNameEnum {
+  AUTO_UPDATE_CONTENT = 'AUTO_UPDATE_CONTENT',
+}
+
+interface RunScriptCommandInterface {
+  (section:string,command:OneOrMany<string>,commandArgs?:KeyValueType<unknown>,cb?:Function):void
+  (section:string,command:OneOrMany<string>,commandArgs?:KeyValueType<unknown>,cb?:ApplyCallbackByNameEnum):void }
+
+/**
+ * 
+ * helper methood to return common callbacks that
+ * could otherwise be painful when dealing with the shell and dynamically loaded modules
+ * @returns Function
+ */
+const applyCallback = (cb:Function|ApplyCallbackByNameEnum):Function => {
+  if(typeof cb === 'function') return cb
+  switch (cb) {
+    case ApplyCallbackByNameEnum.AUTO_UPDATE_CONTENT:
+    return ()=>{}
+  }
+}
+
+export const runScriptCommand:RunScriptCommandInterface = async (section,command,commandArgs={},cb) => {
+  const callback = cb ? applyCallback(cb) : null
   const sectionScript = SECTION_SCRIPTS[section]
   if(sectionScript[command as string]) { // dynamic import
     const retVal = sectionScript[command as string](commandArgs)
-    if(cb) retVal ? cb(retVal) : cb()
+    if(callback) {
+      retVal ? callback(retVal) : callback()
+    }
   }
   else { // shell script
     const cmd = [sectionScript,...command] as string[] // force a file to be referenced, no anonymous `Deno.run` calls
@@ -17,10 +44,11 @@ export const runScriptCommand = async (section:string,command:OneOrMany<string>,
     await shellCmd.status()
     if(commandArgs.stdout && commandArgs.stdout === 'piped'){
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
-      cb && cb(pipedOutput)
+      callback && callback(pipedOutput)
     }
   }
 }
+
 
 /**
  * TODO:

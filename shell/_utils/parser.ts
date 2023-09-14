@@ -2,7 +2,7 @@ type rawArgsType = {[x: string]: unknown; _: string[]; '--': string[];}
 
 import {loadSrcFile} from './fs.ts'
 import { stringify, parse } from '../../modules/downquark.ventureCore.SubatomicModules/external/iarna-toml/toml-esm.mjs'
-import { SECTION_SCRIPTS, runScriptCommand } from '../interactions/scripts.ts';
+import { ApplyCallbackByNameEnum, SECTION_SCRIPTS, runScriptCommand } from '../interactions/scripts.ts';
 
 const _parseToml = (rawData:string) => parse(rawData)
 export const parseArgs = (rawArgs:string[]) => _parseToml(loadSrcFile(rawArgs[0]))
@@ -16,9 +16,9 @@ export const parseDynamicScripts = () => { // allow shell files to be executable
     if(typeof sectionScript === 'string'){ // if not a dynamically loaded module
       const chmod = Deno.run({ cmd: shellParams(sectionScript)._CHMOD })
       await chmod.status()
-      runScriptCommand(sectionId,['init'])
+      runScriptCommand(sectionId,['init'],undefined,ApplyCallbackByNameEnum.AUTO_UPDATE_CONTENT)
     }
     else
-      runScriptCommand(sectionId,'_INIT')
+      runScriptCommand(sectionId,'_INIT',undefined,ApplyCallbackByNameEnum.AUTO_UPDATE_CONTENT)
   })
 }
