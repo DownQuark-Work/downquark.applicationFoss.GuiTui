@@ -15,10 +15,13 @@ const shellParams = (sh:string) => ({
     BLUR:[sh,'-section','blur',],
     FOCUS:[sh,'-section','focus'],
   },
+  UPDATE:{
+    CONTENT:['-update','content']
+  }
 })
 
 export const parseDynamicScripts = async () => {
-  Object.values(SECTION_SCRIPTS).forEach(async sectionScript => {
+  Object.entries(SECTION_SCRIPTS).forEach(async ([sectionId,sectionScript]) => {
     if(typeof sectionScript !== 'string')
       sectionScript._INIT() // initialize dynamic imports
     else { // initialize shell scripts
@@ -28,6 +31,10 @@ export const parseDynamicScripts = async () => {
       // run the init function
       const init = Deno.run({ cmd: shellParams(sectionScript).INIT })
       await init.status()
+      // show initial content
+      runScriptCommand(sectionId,shellParams(sectionScript).UPDATE.CONTENT,{stdout: 'piped'},(cntnt:any)=>{
+        // handle content update
+      })
     }
   })
 
@@ -63,4 +70,6 @@ export const runScriptCommand = async (section:string,command:OneOrMany<string>,
  *   - [ ] any file should be able to update any section's content by specifying the id
  *     although it would be for the current selected section by default
  * Those should both live here because this holds the go-between methods
+ * 
+ * - [ ] remember to add the scrollability
  */
