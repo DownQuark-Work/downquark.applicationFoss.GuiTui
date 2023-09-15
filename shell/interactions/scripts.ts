@@ -58,6 +58,7 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
   return null
 }
 
+// TODO: Refactor this whole file ... had to be messy to get it wokring .. but it definitely needs to be tightened up
 export const runScriptCommand:RunScriptCommandInterface = async (section,command,commandArgs={},cb) => {
   console.log('cb: ', cb, section)
   const cbArg = (Array.isArray(cb)) ? cb.shift() : cb
