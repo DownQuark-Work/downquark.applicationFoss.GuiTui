@@ -22,8 +22,8 @@ const parsedCommonParams = (sh:string='',args:any) => ({
     SH:[],TS:[]
   },
   REQ_UPDATE_CONTENT: {
-    args,
-    SH:[sh,';sh',args],TS:['not',args]
+    SH:[sh,['-update','content'],{stdout: 'piped'}],
+    TS:[sh,'_UPDATE_CONTENT',undefined]
   },
 })
 
@@ -39,7 +39,13 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
   hasAppliedCallback = true // something in the switch case matches and val persists
   switch (cb) {
     case ApplyCallbackByNameEnum.REQUEST_UPDATED_CONTENT_FROM_SCRIPT:
-      return (s:string,a:any) => console.log('CALLBACK OCCURED: ', parsedCommonParams(s,a))
+      return (secCb:any,a:any) => {
+        const {k,section,cb} = secCb
+        const parsedParams:any = parsedCommonParams(section,a).REQ_UPDATE_CONTENT
+        cb & parsedParams[k].push(cb)
+        // console.log('CALLBACK OCCURED: ', parsedCommonParams(s,a).REQ_UPDATE_CONTENT)
+        console.log('called back: ', parsedParams[k])
+      }
     case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
     return null // ()=>{} // 
   }
@@ -56,7 +62,7 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
     let retVal = sectionScript[command as string](commandArgs)
     if(callback) {
       if(hasAppliedCallback){ // send section and return val if applicable
-        retVal ? callback(section,retVal) : callback(section)
+        retVal ? callback({k:'TS',section,cb},retVal) : callback({k:'TS',section,cb})
       } else retVal ? callback(retVal) : callback()
     }
   }
@@ -67,11 +73,11 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
     if(commandArgs.stdout && commandArgs.stdout === 'piped'){
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
       if(callback) {
-        hasAppliedCallback ? callback(section,pipedOutput) : callback(pipedOutput)
+        hasAppliedCallback ? callback({k:'SH',section,cb},pipedOutput) : callback(pipedOutput)
       } 
     }
     else if(hasAppliedCallback) { // even if no pipe to await run callback if it was specified
-      callback && callback(section)
+      callback && callback({k:'SH',section,cb})
     }
   }
 }
