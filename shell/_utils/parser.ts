@@ -21,6 +21,8 @@ export const parseDynamicScripts = () => { // allow shell files to be executable
     else
       runScriptCommand(sectionId,'_INIT',undefined,[...onInitCallbackChain])
   })
-  runScriptCommand('0-top',['-update','content'],{stdout: 'piped'},[...onInitCallbackChain])
+  // leaving for debug - but should not need the below
+  // runScriptCommand('_global','CustomGlobalFunction',{testing:321},[...onInitCallbackChain])
+  // runScriptCommand('0-top',['-update','content'],{stdout: 'piped'},[...onInitCallbackChain])
 
 }

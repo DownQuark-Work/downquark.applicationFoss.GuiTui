@@ -48,17 +48,22 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
 }
 
 export const runScriptCommand:RunScriptCommandInterface = async (section,command,commandArgs={},cb) => {
-  console.log('cb: ', cb)
+  console.log('cb: ', cb, section)
   const cbArg = (Array.isArray(cb)) ? cb.shift() : cb
   const callback = cbArg ? applyCallback(cbArg) : null
   // console.log('callback: ', callback?.toString())
+  console.log('hasAppliedCallback,cb: ', hasAppliedCallback,callback,section)
   const sectionScript = SECTION_SCRIPTS[section]
+  console.log('sectionScript: ', sectionScript)
+  console.log('command: ', command)
+  console.log('sectionScript[command as string]: ', sectionScript[command as string])
   if(sectionScript[command as string]) { // dynamic import
-    const retVal = sectionScript[command as string](commandArgs)
+    console.log('INSIDE: ', hasAppliedCallback,callback)
+    let retVal = sectionScript[command as string](commandArgs)
     if(callback) {
       if(hasAppliedCallback){ // send section and return val if applicable
-        retVal ? callback(section,retVal) : callback(section)
-      } else retVal ? callback(retVal) : callback()
+        retVal ? console.log(callback(section,retVal)) : console.log(callback(section))
+      } else retVal ? console.log(callback(retVal)) : console.log(callback())
     }
   }
   else { // shell script

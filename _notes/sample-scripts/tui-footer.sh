@@ -22,6 +22,7 @@ echo tui-footer ACTION: $ACTION
 SomethingCustom="NOT set yet"
 function InitFnc {
   echo Running init function: $SomethingCustom
+	echo FIN
 }
 
 if [ "$ACTION" == "init" ]; then
