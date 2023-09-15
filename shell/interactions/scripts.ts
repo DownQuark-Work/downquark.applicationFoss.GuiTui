@@ -40,7 +40,6 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
   switch (cb) {
     case ApplyCallbackByNameEnum.REQUEST_UPDATED_CONTENT_FROM_SCRIPT:
       return parsedCommonParams
-      // return (section:string,args:any)=>parsedCommonParams(section,args)
     case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
     return null // ()=>{} // 
   }
@@ -52,14 +51,11 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
   console.log('cb: ', cb)
   const cbArg = (Array.isArray(cb)) ? cb.shift() : cb
   const callback = cbArg ? applyCallback(cbArg) : null
-  console.log('callback: ', callback?.toString())
+  // console.log('callback: ', callback?.toString())
   const sectionScript = SECTION_SCRIPTS[section]
   if(sectionScript[command as string]) { // dynamic import
     const retVal = sectionScript[command as string](commandArgs)
     if(callback) {
-      // retVal ? callback(retVal) : hasAppliedCallback ? callback(section) : callback()
-      // requested callback takes priority
-      // hasAppliedCallback ? callback(section) : retVal ? callback(retVal) : callback()
       if(hasAppliedCallback){ // send section and return val if applicable
         retVal ? callback(section,retVal) : callback(section)
       } else retVal ? callback(retVal) : callback()
@@ -71,10 +67,8 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
     await shellCmd.status()
     if(commandArgs.stdout && commandArgs.stdout === 'piped'){
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
-      console.log('pipedOutput: ', pipedOutput, callback, 'xxxx',hasAppliedCallback)
-      console.log('xcvxcvcvxcv',parsedCommonParams(section,pipedOutput))
-      console.log('1231232',callback(section,pipedOutput))
       if(callback) {
+        console.log('1231232',callback(section,pipedOutput))
         hasAppliedCallback ? callback(section,pipedOutput) : callback(pipedOutput)
       } 
     }
