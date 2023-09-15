@@ -45,6 +45,11 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
         cb & parsedParams[k].push(cb)
         // console.log('CALLBACK OCCURED: ', parsedCommonParams(s,a).REQ_UPDATE_CONTENT)
         console.log('called back: ', parsedParams[k])
+        console.log('STARTE HERE ;;;; should only need something along the lines of');
+        console.log(': runScriptCommand(...parsedParams[k])  ',
+        'i REALLY dont think the line above will work - but it\'d be cool if it did, right?!'
+        )
+        
       }
     case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
     return null // ()=>{} // 
