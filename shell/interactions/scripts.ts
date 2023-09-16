@@ -13,7 +13,7 @@ interface RunScriptCommandInterface {
 export enum ApplyCallbackByNameEnum { // this should be used in conjunction with the default methods below
   _DEBUG = '_DEBUG',
   REQUEST_UPDATED_CONTENT_FROM_SCRIPT = 'REQUEST_UPDATED_CONTENT_FROM_SCRIPT',
-  UPDATE_CONTENT_ON_COMPLETION = 'UPDATE_CONTENT_ON_COMPLETION',
+  UPDATE_DISPLAY_ON_COMPLETION = 'UPDATE_DISPLAY_ON_COMPLETION',
 }
 // The below are used for the templating system.
 // These methods can be no-op but will need to be created when we export the template files
@@ -44,18 +44,13 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
         const {k,section,cb} = secCb
         const parsedParams:any = parsedCommonParams(section,a).REQ_UPDATE_CONTENT
         cb & parsedParams[k].push(cb)
-        console.log('1st called back: ', parsedParams[k])
         runScriptCommand(parsedParams[k][0],parsedParams[k][1],parsedParams[k][2],parsedParams[k][3])
       }
-    case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
-      console.log('2nd callback!!!');
-      console.log('ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:: ', ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION)
+    case ApplyCallbackByNameEnum.UPDATE_DISPLAY_ON_COMPLETION:
       return (secCb:any,a:any) => {
         const {k,section,cb} = secCb
         const parsedParams:any = parsedCommonParams(section,a).DISPLAY_CONTENT
         cb & parsedParams[k].push(cb)
-        console.log('parsedParams2 : ', parsedParams)
-        console.log('k: ', k)
         runScriptCommand(parsedParams[k][0],parsedParams[k][1],parsedParams[k][2],parsedParams[k][3])
       }
   }
@@ -65,7 +60,6 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
 
 // TODO: Refactor this whole file ... had to be messy to get it wokring .. but it definitely needs to be tightened up
 export const runScriptCommand:RunScriptCommandInterface = async (section,command,commandArgs={},cb) => {
-  console.log('cb: ', cb, section)
   const cbArg = (Array.isArray(cb)) ? cb.shift() : cb
   const callback = cbArg ? applyCallback(cbArg) : null
   const sectionScript = SECTION_SCRIPTS[section]
@@ -84,8 +78,6 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
   }
   else { // shell script
     const cmd = [sectionScript,...command] as string[] // force a file to be referenced, no anonymous `Deno.run` calls
-    console.log('cmd: ', cmd, sectionScript)
-    console.log('...commandArgs: ', commandArgs)
     const shellCmd = Deno.run({ cmd, ...commandArgs })
     await shellCmd.status()
     

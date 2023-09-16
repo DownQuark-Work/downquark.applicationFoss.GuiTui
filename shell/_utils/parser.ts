@@ -9,7 +9,7 @@ export const parseArgs = (rawArgs:string[]) => _parseToml(loadSrcFile(rawArgs[0]
 
 const onInitCallbackChain = [
   ApplyCallbackByNameEnum.REQUEST_UPDATED_CONTENT_FROM_SCRIPT,
-  ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION,
+  ApplyCallbackByNameEnum.UPDATE_DISPLAY_ON_COMPLETION,
 ]
 export const parseDynamicScripts = () => { // allow shell files to be executable
   Object.entries(SECTION_SCRIPTS).forEach(async ([sectionId,sectionScript]) => {
