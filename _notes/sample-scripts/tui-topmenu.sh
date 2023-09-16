@@ -54,7 +54,7 @@ function UpdateContent {
 	done
 }
 
-UpdateDisplay {
+function UpdateDisplay {
 	echo send back to deno if you have to
 	echo AFTER you get the ts side working so you can focus on this
 }

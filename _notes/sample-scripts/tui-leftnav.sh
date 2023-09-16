@@ -12,10 +12,15 @@ case $1 in
 	"init")
 		ACTION="init"
 	;;
-
 	"-section")
 		ACTION="section-$2"
-	;;	
+	;;
+	"-update")
+		ACTION="update-$2"
+	;;
+	"-custom")
+		ACTION="custom-$2"
+	;;
 esac
 
 echo tui-leftnav ACTION: $ACTION
