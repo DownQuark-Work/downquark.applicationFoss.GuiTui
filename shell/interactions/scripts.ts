@@ -44,13 +44,8 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
         const {k,section,cb} = secCb
         const parsedParams:any = parsedCommonParams(section,a).REQ_UPDATE_CONTENT
         cb & parsedParams[k].push(cb)
-        // console.clear()
         console.log('1st called back: ', parsedParams[k])
         runScriptCommand(parsedParams[k][0],parsedParams[k][1],parsedParams[k][2],parsedParams[k][3])
-        // console.log('STARTE HERE ;;;; should only need something along the lines of');
-        // console.log(': runScriptCommand(...parsedParams[k])  ',
-        // 'i REALLY dont think the line above will work - but it\'d be cool if it did, right?!'
-        // )
       }
     case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
       console.log('2nd callback!!!');
