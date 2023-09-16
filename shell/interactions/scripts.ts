@@ -49,6 +49,11 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
         console.log(': runScriptCommand(...parsedParams[k])  ',
         'i REALLY dont think the line above will work - but it\'d be cool if it did, right?!'
         )
+        console.log('ALOSO: consider making what is now `tui-global` into `manager` or something of the like ',
+        'that is auto-generated and acts as an intermediary layer. It receives all requests and directs them to the ',
+        'active section, or section that is specified, etc. - that way we can clean up the core code and gove the end user a ',
+        'way to extend the global functionality. Including adding custom `ApplyCallbackByNameEnum` -< bc that is where we would ',
+        'move those definitions.')
         
       }
     case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
