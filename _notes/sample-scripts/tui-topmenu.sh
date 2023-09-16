@@ -48,15 +48,12 @@ topMenuKV=(
 
 function UpdateContent {
 	echo ${topmenuInitContent[@]}
-	
-	for index in "${topMenuKV[@]}" ; do
-		echo "${index##}|"
-	done
 }
 
 function UpdateDisplay {
-	echo send back to deno if you have to
-	echo AFTER you get the ts side working so you can focus on this
+	for index in "${topMenuKV[@]}" ; do
+		echo "${index##}|"
+	done
 }
 
 if [ "$ACTION" == "init" ]; then

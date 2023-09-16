@@ -86,6 +86,7 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
       
       if(callback) {
+        // console.log('pipedOutput: ', pipedOutput) // debug pipedOutput in callback
         hasAppliedCallback ? callback({k:'SH',section,cb},pipedOutput) : callback(pipedOutput)
       }
       else { // must consider the pipedOutput as the end of the chain and apply results
