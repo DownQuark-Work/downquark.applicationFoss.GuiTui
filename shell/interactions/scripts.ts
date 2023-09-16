@@ -74,7 +74,6 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
       if(hasAppliedCallback){ // send section and return val if applicable
         retVal ? callback({k:'TS',section,cb},retVal) : callback({k:'TS',section,cb})
       } else retVal ? callback(retVal) : callback()
-      console.log('****** SEE extended note below ****');
     }
   }
   else { // shell script
