@@ -54,12 +54,19 @@ function UpdateContent {
 	done
 }
 
+UpdateDisplay {
+	echo send back to deno if you have to
+	echo AFTER you get the ts side working so you can focus on this
+}
+
 if [ "$ACTION" == "init" ]; then
   echo Initial Value: $SomethingCustom
   SomethingCustom="POC"
   InitFnc
 elif [ $ACTION == "update-content" ]; then
   UpdateContent $3
+elif [ $ACTION == "update-display" ]; then
+  UpdateDisplay $3
 elif [ $ACTION == "section-blur" ]; then
 	echo create and run SectionBlur method
 elif [ $ACTION == "section-focus" ]; then

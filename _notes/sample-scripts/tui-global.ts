@@ -7,9 +7,14 @@ export const _INIT = () => {
 let tmpData = 'pickle me!!'
 export const _UPDATE_CONTENT = () => {
   console.log('UPDATING CONTENT :: from tui-global.ts');
+  console.log('changing pickle to tickle');
+  tmpData = 'tickle me!!'
+  
 }
 export const _UPDATE_DISPLAY = () => {
   console.log('UPDATING DISPLAY :: from tui-global.ts');
+  console.log('should show `tickle me` if mutations were correct');
+  
   console.log('USING DATA: ', tmpData)
 }
 
