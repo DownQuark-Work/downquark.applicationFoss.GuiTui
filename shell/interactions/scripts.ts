@@ -92,17 +92,15 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
         console.log('pipedOutput: ', pipedOutput)
       }
     }
-    else if(hasAppliedCallback) { // even if no pipe to await run callback if it was specified
-      callback && callback({k:'SH',section,cb})
+    else {
+      if(hasAppliedCallback) { // even if no pipe to await run callback if it was specified
+        callback && callback({k:'SH',section,cb})
+        return
+      }
+      console.log('END OF SCRIPT CHAIN WITH NO PIPED OUTPUT')
     }
   }
 }
-
-console.log('ALOSO: consider making what is now `tui-global` into `manager` or something of the like ',
-        'that is auto-generated and acts as an intermediary layer. It receives all requests and directs them to the ',
-        'active section, or section that is specified, etc. - that way we can clean up the core code and gove the end user a ',
-        'way to extend the global functionality. Including adding custom `ApplyCallbackByNameEnum` - bc that is where we would ',
-        'move those definitions.')
 
 
 /**
