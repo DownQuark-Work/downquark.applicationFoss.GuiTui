@@ -2,6 +2,10 @@ export const _INIT = () => {
   console.log('INITTING tui-main: ', Date.now())
 }
 
+export const _UPDATE_CONTENT = () => {
+  console.log('UPDATING CONTENT :: from tui-main.ts');
+}
+
 export const _ON_SECTION_BLUR = () => {
   console.log('tui-main _ON_SECTION_BLUR: ')
   // will be called _only_ when this section has focus

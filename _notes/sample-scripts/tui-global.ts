@@ -4,6 +4,16 @@ export const _INIT = () => {
   console.log('INITTING tui-global: ', Date.now())
 }
 
+let tmpData = 'pickle me!!'
+export const _UPDATE_CONTENT = () => {
+  console.log('UPDATING CONTENT :: from tui-global.ts');
+}
+export const _UPDATE_DISPLAY = () => {
+  console.log('UPDATING DISPLAY :: from tui-global.ts');
+  console.log('USING DATA: ', tmpData)
+}
+
+
 export const _ON_SECTION_BLUR = () => {
   console.log('tui-global _ON_SECTION_BLUR: ')
   // will be called each time a new section has focus

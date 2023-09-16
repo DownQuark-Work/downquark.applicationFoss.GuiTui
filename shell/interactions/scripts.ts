@@ -19,7 +19,8 @@ export enum ApplyCallbackByNameEnum { // this should be used in conjunction with
 // These methods can be no-op but will need to be created when we export the template files
 const parsedCommonParams = (sh:string='',args:any) => ({
   DISPLAY_CONTENT: {
-    SH:[],TS:[]
+    SH:[sh,['-update','display'],{stdout: 'piped'}],
+    TS:[sh,'_UPDATE_DISPLAY',undefined]
   },
   REQ_UPDATE_CONTENT: {
     SH:[sh,['-update','content'],{stdout: 'piped'}],
@@ -43,21 +44,24 @@ const applyCallback = (cb:Function|ApplyCallbackByNameEnum):OrNull<Function> => 
         const {k,section,cb} = secCb
         const parsedParams:any = parsedCommonParams(section,a).REQ_UPDATE_CONTENT
         cb & parsedParams[k].push(cb)
-        // console.log('CALLBACK OCCURED: ', parsedCommonParams(s,a).REQ_UPDATE_CONTENT)
-        console.log('called back: ', parsedParams[k])
-        console.log('STARTE HERE ;;;; should only need something along the lines of');
-        console.log(': runScriptCommand(...parsedParams[k])  ',
-        'i REALLY dont think the line above will work - but it\'d be cool if it did, right?!'
-        )
-        console.log('ALOSO: consider making what is now `tui-global` into `manager` or something of the like ',
-        'that is auto-generated and acts as an intermediary layer. It receives all requests and directs them to the ',
-        'active section, or section that is specified, etc. - that way we can clean up the core code and gove the end user a ',
-        'way to extend the global functionality. Including adding custom `ApplyCallbackByNameEnum` -< bc that is where we would ',
-        'move those definitions.')
-        
+        // console.clear()
+        console.log('1st called back: ', parsedParams[k])
+        runScriptCommand(parsedParams[k][0],parsedParams[k][1],parsedParams[k][2],parsedParams[k][3])
+        // console.log('STARTE HERE ;;;; should only need something along the lines of');
+        // console.log(': runScriptCommand(...parsedParams[k])  ',
+        // 'i REALLY dont think the line above will work - but it\'d be cool if it did, right?!'
+        // )
       }
     case ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:
-    return null // ()=>{} // 
+      console.log('2nd callback!!!');
+      console.log('ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION:: ', ApplyCallbackByNameEnum.UPDATE_CONTENT_ON_COMPLETION)
+      return (secCb:any,a:any) => {
+        const {k,section,cb} = secCb
+        const parsedParams:any = parsedCommonParams(section,a).DISPLAY_CONTENT
+        cb & parsedParams[k].push(cb)
+        console.log('parsedParams2 : ', parsedParams)
+        runScriptCommand(parsedParams[k][0],parsedParams[k][1],parsedParams[k][2],parsedParams[k][3])
+      }
   }
   hasAppliedCallback = false // or no match and val resets
   return null
@@ -75,9 +79,11 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
       if(hasAppliedCallback){ // send section and return val if applicable
         retVal ? callback({k:'TS',section,cb},retVal) : callback({k:'TS',section,cb})
       } else retVal ? callback(retVal) : callback()
+      console.log('****** SEE extended note below ****');
     }
   }
   else { // shell script
+    return
     const cmd = [sectionScript,...command] as string[] // force a file to be referenced, no anonymous `Deno.run` calls
     const shellCmd = Deno.run({ cmd, ...commandArgs })
     await shellCmd.status()
@@ -85,10 +91,16 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
       if(callback) {
         hasAppliedCallback ? callback({k:'SH',section,cb},pipedOutput) : callback(pipedOutput)
-      } 
+        console.log('****** SEE extended note below ****');
+      }
     }
     else if(hasAppliedCallback) { // even if no pipe to await run callback if it was specified
       callback && callback({k:'SH',section,cb})
+        console.log('ALOSO: consider making what is now `tui-global` into `manager` or something of the like ',
+        'that is auto-generated and acts as an intermediary layer. It receives all requests and directs them to the ',
+        'active section, or section that is specified, etc. - that way we can clean up the core code and gove the end user a ',
+        'way to extend the global functionality. Including adding custom `ApplyCallbackByNameEnum` - bc that is where we would ',
+        'move those definitions.')
     }
   }
 }
