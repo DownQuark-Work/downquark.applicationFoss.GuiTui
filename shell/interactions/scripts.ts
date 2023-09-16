@@ -107,6 +107,9 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
  * TODO:
  * above are the main calls from the template files
  * - [x] we need to make the ability to call a custom command
+ * - [x] deno can request and receive content from scripts
+ * - [ ] deno needs to handle received content at end of callback chain
+ * 
  * - [ ] we need to have one more templated method that provides the 
  *   handshake for updating content from the script files
  *   - [ ] any file should be able to update any section's content by specifying the id
