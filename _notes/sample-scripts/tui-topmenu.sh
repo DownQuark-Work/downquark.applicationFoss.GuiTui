@@ -6,7 +6,7 @@
 # ./tui-topmenu.sh -section focus
 
 
-echo Running tui-topmenu $@
+# echo Running tui-topmenu $@
 
 case $1 in 
 	"init")
@@ -23,11 +23,12 @@ case $1 in
 	;;
 esac
 
-echo tui-topmenu ACTION: $ACTION
+noop="N0thing"
+# echo tui-topmenu ACTION: $ACTION
 
 SomethingCustom="NOT set yet"
 function InitFnc {
-  echo Running init function: $SomethingCustom
+  noop="Running init function: $SomethingCustom"
 }
 
 function CustomFnc {
@@ -47,7 +48,7 @@ topMenuKV=(
 )
 
 function UpdateContent {
-	echo ${topmenuInitContent[@]}
+	noop="echo ${topmenuInitContent[@]}"
 }
 
 function UpdateDisplay {
@@ -57,7 +58,7 @@ function UpdateDisplay {
 }
 
 if [ "$ACTION" == "init" ]; then
-  echo Initial Value: $SomethingCustom
+  noop="Initial Value: $SomethingCustom"
   SomethingCustom="POC"
   InitFnc
 elif [ $ACTION == "update-content" ]; then

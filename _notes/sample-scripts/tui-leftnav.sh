@@ -5,8 +5,8 @@
 # ./tui-leftnav.sh -section blur
 # ./tui-leftnav.sh -section focus
 
-
-echo Running tui-leftnav $@
+noop="N0thing"
+# echo Running tui-leftnav $@
 
 case $1 in 
 	"init")
@@ -23,19 +23,30 @@ case $1 in
 	;;
 esac
 
-echo tui-leftnav ACTION: $ACTION
+# echo tui-leftnav ACTION: $ACTION
 
 SomethingCustom="NOT set yet"
 function InitFnc {
-  echo Running init function: $SomethingCustom
+  noop="Running init function: $SomethingCustom"
+}
+
+function UpdateContent {
+	noop="PSUEDO updating leftnav content"
+}
+
+function UpdateDisplay {
+	echo Left,Nav,Men,Items
 }
 
 if [ "$ACTION" == "init" ]; then
-  echo Initial Value: $SomethingCustom
-  SomethingCustom="POC"
+  noop="Initial"
   InitFnc
+elif [ $ACTION == "update-content" ]; then
+  UpdateContent $3
+elif [ $ACTION == "update-display" ]; then
+  UpdateDisplay $3
 elif [ $ACTION == "section-blur" ]; then
-	echo create and run SectionBlur method
+	noop="create and run SectionBlur method"
 elif [ $ACTION == "section-focus" ]; then
-  echo create and run SectionFocus method
+  noop="create and run SectionFocus method"
 fi

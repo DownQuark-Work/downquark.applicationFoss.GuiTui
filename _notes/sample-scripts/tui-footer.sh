@@ -5,8 +5,8 @@
 # ./tui-footer.sh -section blur
 # ./tui-footer.sh -section focus
 
-
-echo Running tui-footer $@
+noop="N0thing"
+# echo Running tui-footer $@
 
 case $1 in 
 	"init")
@@ -23,35 +23,32 @@ case $1 in
 	;;
 esac
 
-echo tui-footer ACTION: $ACTION
+# echo tui-footer ACTION: $ACTION
 
 SomethingCustom="NOT set yet"
 function InitFnc {
-  echo Running init function: $SomethingCustom
-	echo FIN
+  noop="Running init function: $SomethingCustom"
 }
 
 function UpdateContent {
-	echo PSUEDO updating footer content
+	noop="PSUEDO updating footer content"
 }
 
 function UpdateDisplay {
-	echo send back to deno if you have to
-	echo AFTER you get the ts side working so you can focus on this
+	echo Updated footer content
 }
 
 if [ "$ACTION" == "init" ]; then
-  echo Initial Value: $SomethingCustom
-  SomethingCustom="POCfooter"
+  noop="Initial"
   InitFnc
 elif [ $ACTION == "update-content" ]; then
   UpdateContent $3
 elif [ $ACTION == "update-display" ]; then
   UpdateDisplay $3
 elif [ $ACTION == "section-blur" ]; then
-	echo create and run SectionBlur method
+	noop="create and run SectionBlur method"
 elif [ $ACTION == "section-focus" ]; then
-  echo create and run SectionFocus method
+  noop="create and run SectionFocus method"
 elif [ $ACTION == "custom-top" ]; then
   CustomFnc 'custom method prop'
 fi
