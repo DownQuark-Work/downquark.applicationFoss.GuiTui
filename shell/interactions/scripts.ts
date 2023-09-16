@@ -67,6 +67,7 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
   if(typeof command === 'string') { // dynamic import
   if(!sectionScript[command]) {
     console.log('WARNING::', section, ' does NOT contain the method: ',  command)
+    console.log('ENDOFTSCHAIN: ') // exit chain early if this occurs
     return
   }
     let retVal = sectionScript[command as string](commandArgs)
@@ -74,7 +75,7 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
       if(hasAppliedCallback){ // send section and return val if applicable
         retVal ? callback({k:'TS',section,cb},retVal) : callback({k:'TS',section,cb})
       } else retVal ? callback(retVal) : callback()
-    }
+    } else console.log('ENDOFTSCHAIN: ')
   }
   else { // shell script
     const cmd = [sectionScript,...command] as string[] // force a file to be referenced, no anonymous `Deno.run` calls
@@ -85,11 +86,10 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
       const pipedOutput = new TextDecoder().decode(await shellCmd.output())
       
       if(callback) {
-        console.log('callback.toString(): ', callback.toString())
         hasAppliedCallback ? callback({k:'SH',section,cb},pipedOutput) : callback(pipedOutput)
       }
       else { // must consider the pipedOutput as the end of the chain and apply results
-        console.log('pipedOutput: ', pipedOutput)
+        console.log('ENDOFCHAIN pipedOutput: ', pipedOutput)
       }
     }
     else {
@@ -97,7 +97,7 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
         callback && callback({k:'SH',section,cb})
         return
       }
-      console.log('END OF SCRIPT CHAIN WITH NO PIPED OUTPUT')
+      console.log('ENDOFCHAIN WITH NO PIPED OUTPUT')
     }
   }
 }
