@@ -92,7 +92,8 @@ export const runScriptCommand:RunScriptCommandInterface = async (section,command
       else { // must consider the pipedOutput as the end of the chain and apply results
         // TODO-CURRENT: at end of chain update display with most recent data
         // this may actually start us and we can fine tune it after the refactor
-        console.log('ENDOFCHAIN pipedOutput: ', pipedOutput)
+        // console.log('ENDOFCHAIN pipedOutput: ', pipedOutput)
+        handleParsedScriptEvent(section,pipedOutput)
       }
     }
     else {

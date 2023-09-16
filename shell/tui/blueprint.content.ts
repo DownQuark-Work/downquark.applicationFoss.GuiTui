@@ -70,6 +70,7 @@ export const Content = {
   Set: {
     idActive:_setIdActive,
     Initial:_configureInitialContent,
+    CellValues:_setContent
   },
   Update:_replit,
 }
