@@ -52,9 +52,10 @@ function UpdateContent {
 }
 
 function UpdateDisplay {
-	for index in "${topMenuKV[@]}" ; do
-		echo "${index##}|"
-	done
+	# for index in "${topMenuKV[@]}" ; do
+	# 	echo "${index##}|"
+	# done
+	echo we,shall,start,simple
 }
 
 if [ "$ACTION" == "init" ]; then

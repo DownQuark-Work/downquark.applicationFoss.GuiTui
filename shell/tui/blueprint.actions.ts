@@ -15,6 +15,8 @@ const handleParsedKeyboardEvent = (key:keyPressReturnType) => {
   key.isKey(RESERVED_KEYPRESS.TAB) && Content.Set.idActive()
 }
 
+const quickPOC:[number[],string[]] = [[],[]]
+let renderit = true
 export const handleParsedScriptEvent = (section:string,scriptEvent:string) => {
   console.log('START HERE!!!! -- NEEDS to be corrected ... but were getting the updates to the TUI happening in a flash!')
   console.log('Pretty sure it is just too much happening too fast ... maybe find a way to concat the changes before an update?')
@@ -24,11 +26,23 @@ export const handleParsedScriptEvent = (section:string,scriptEvent:string) => {
   
   
   //make the array of indexes - move this to a more global location when working
+  console.clear()
   const contentIndexes = new Array(scriptEvent.length).fill('.').map((_,i) => scriptEvent.length+i),
         vals = scriptEvent.split('')
-  // console.clear()
+  console.clear()
+  quickPOC[0].push(...contentIndexes)
+  quickPOC[1].push(...vals)
+
   setTimeout(()=>{
-    Content.Set.CellValues(contentIndexes,scriptEvent.split(''))
+    // if(!renderit)return
+    // renderit = false
+//     const loc = quickPOC[0].flatten(),
+//           val = quickPOC[1].flatten()
+// console.log('loc,val: ', loc,val)
+// console.log('qiuckPOC: ', quickPOC)
+    Content.Set.CellValues(quickPOC[0],quickPOC[1])
+    // Content.Set.CellValues(contentIndexes,scriptEvent.split(''))
+    
     Content.Set.idActive()
   },3000)
 }
