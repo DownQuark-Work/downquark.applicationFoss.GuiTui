@@ -1,24 +1,24 @@
 # Sample data for (G|T)UI development
 project = "GuiTui Sample"
-created = "Date.now()"
+created = 1694588767774
 version = "0.0.1"
 
 [owner]
 "@" = "mlnck"
 
 [[sections]]
-id="0"
+id="0-top"
 label='Top Menu'
 active=true
 fillCharacter='∑'
 x=0
 y=0
 w=100
-h=15
-scriptSrc='./tm.sh'
+h=14
+scriptSrc='./sample-scripts/tui-topmenu.sh' # .ts and .sh are valid file types
 
 [[sections]]
-id="1"
+id="1-leftnav"
 label='Left Nav'
 active=false
 fillCharacter='+'
@@ -26,31 +26,34 @@ x=0
 y=16 # if number then 16%
 w="30" # if string then 30 characters
 h=70
-scriptSrc='./ln.sh'
+scriptSrc='./sample-scripts/tui-leftnav.sh'
 
 [[sections]]
-id="2"
+id="2-footer"
 label='Footer Data'
 active=false
+# disabled=true # this key prevents the ability to tab and select the section
 fillCharacter='∆'
 x=0
-y=90
+y=89
 w=100
 h=10
-scriptSrc='./fc.sh'
+scriptSrc='./sample-scripts/tui-footer.sh'
 
 [[sections]]
-id="3"
+id="3-main"
 label='Main Content'
 active=false
 fillCharacter='?'
 x="31"
-y=17
+y=16
 # if width/height omitted then fill remaining space (in phase 2)
 ## currently, if width/height omitted then throw error
 w=[100,"31"] # if array first value should be the largest dimension -> [startValue, ...subtractions]
-h=[100,16,10] # would not happenn when using GUI - but shows POC -- remember to add +1 for row which is filled (15-16)
-scriptSrc='./main.sh'
+h=[100,16,11] # would not happenn when using GUI - but shows POC -- remember to add +1 for row which is filled (17-18)
+scriptSrc='./sample-scripts/tui-main.ts'
 
 [CONFIG]
-FILL_CHARACTER = ''
+FILL_CHARACTER = 'z'
+RENDER = ['SCROLLABLE_SECTION_WITH_BORDER']
+SCRIPT_SOURCE = './sample-scripts/tui-global.ts' # this script would set global listeners, etc

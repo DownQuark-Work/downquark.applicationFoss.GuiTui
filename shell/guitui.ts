@@ -1,4 +1,14 @@
-// deno run --allow-read --allow-write --allow-run guitui.ts file-from-gui.toml
+#!/usr/bin/env -S deno run --allow-read --allow-write --allow-run
+
+/**
+ * Above allows for:
+ * -`./guitui.ts '../_notes/tui-sample.toml'`
+ * However the deno command still works as well:
+ * - `deno run --allow-read --allow-write --allow-run guitui.ts '../_notes/tui-sample.toml'`
+ * 
+ * > NOTE: To enable bash to run you must: `chmod 755 ./guitui.ts`
+ */
+
 
 import { TomlType } from '../guitui.d.ts';
 import {parse} from './_deps.ts'
