@@ -1,5 +1,7 @@
+import { Grid } from '../_deps.ts'
+// import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
+// const {Grid} = UtilsGrid
 import { EnumConfigSetup } from "../_utils/_constants.ts";
-import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
 import { _BLUEPRINT as BP } from "./blueprint.ts";
 
 import { chalq } from "../_deps.ts";
@@ -10,7 +12,6 @@ type ConversionFncType =
   (id:string,tl:[string|number|Array<string|number>,string|number|Array<string|number>],br:[string|number|Array<string|number>,string|number|Array<string|number>])
     => [number,number,number,number]
 
-const { Grid } = UtilsGrid
 
 const applyConfigs = () => {
   if(BP.TUI.CONFIG?.RENDER?.includes(EnumConfigSetup.SCROLLABLE_SECTION_WITH_BORDER)) { // currently the only config

@@ -19,17 +19,14 @@ Create TUIs with a GUI
 
 to reset
 ```
-rm -rf modules && mkdir modules                                                                                                             rm .gitmodules                                                                                                                              rm -rf .git/modules/modules/
+rm -rf <SUBMODULES_DIRECTORY> && mkdir <SUBMODULES_DIRECTORY>
+rm .gitmodules
+rm -rf .git/modules/*
 ```
 
 to add submodule from scratch (or after a reset):
-```
-% cd modules
-% git submodule add -b develop https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
-% git submodule init
-```
+- See instructions [here](https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules/tree/feature/generators/prng#add-submodule-and-define-the-branch-you-want-to-track)
   
   To check out once `.gitmodules` has been added
   `git clone --recursive https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git`
   `git submodule add https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git modules/downquark.ventureCore.SubatomicModules`
-  

@@ -1,10 +1,10 @@
 type rawArgsType = {[x: string]: unknown; _: string[]; '--': string[];}
 
 import {loadSrcFile} from './fs.ts'
-import { stringify, parse } from '../../modules/downquark.ventureCore.SubatomicModules/external/iarna-toml/toml-esm.mjs'
+import { stringify, parseToml } from '../_deps.ts'
 import { ApplyCallbackByNameEnum, SECTION_SCRIPTS, runScriptCommand } from '../interactions/scripts.ts';
 
-const _parseToml = (rawData:string) => parse(rawData)
+const _parseToml = (rawData:string) => parseToml(rawData)
 export const parseArgs = (rawArgs:string[]) => _parseToml(loadSrcFile(rawArgs[0]))
 
 const onInitCallbackChain = [

@@ -1,8 +1,8 @@
-[submodule "modules/downquark.ventureCore.SubatomicModules"]
-	path = modules/downquark.ventureCore.SubatomicModules
+[submodule "modules/subquark-develop"]
+	path = modules/subquark-develop
 	url = https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
 	branch = develop
-[submodule "modules/downquark.ventureCore.SubatomicModules"]
-	path = modules/downquark.ventureCore.SubatomicModules
+[submodule "modules/subquark-main"]
+	path = modules/subquark-main
 	url = https://github.com/DownQuark-Work/downquark.ventureCore.SubatomicModules.git
-	branch = main
+	branch = develop

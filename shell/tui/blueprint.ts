@@ -1,4 +1,4 @@
-import { UtilsGrid } from '../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts'
+import { Grid } from '../_deps.ts'
 import { LoadDynamicScripts } from '../_utils/fs.ts';
 
 import { InitBlueprint } from './blueprint.initialize.ts';
@@ -7,8 +7,7 @@ import { Content } from './blueprint.content.ts'
 
 import { BluePrintType,TomlType } from '../../guitui.d.ts';
 
-const { Grid } = UtilsGrid,
-      TUI:TomlType = {
+const TUI:TomlType = {
         project: "",created: "",
         version: "",owner: { "@": ""},
         sections: []
