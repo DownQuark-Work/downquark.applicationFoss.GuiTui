@@ -1,3 +1,4 @@
+import { Grid } from '../_deps.ts'
 import { _BLUEPRINT } from "./blueprint.ts";
 import {
   keyPressReturnType,
@@ -6,7 +7,7 @@ import {
   toggleCursor
 } from "../interactions/keyboard.ts";
 import { Content } from "./blueprint.content.ts";
-import { UtilsGrid } from "../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts";
+//import { UtilsGrid } from "../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts";
 
 
 type ScrollSectionType = (_:{section:[w:number,h:number],content:[w:number,h:number],offset:[x:number,y:number]}) => void

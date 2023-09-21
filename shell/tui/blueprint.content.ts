@@ -1,4 +1,4 @@
-import { UtilsGrid } from "../../modules/downquark.ventureCore.SubatomicModules/_dq/_utils/array.grid.ts";
+import { Grid } from '../_deps.ts'
 import { _BLUEPRINT } from "./blueprint.ts";
 import { UI } from "../_utils/ui.ts";
 
@@ -11,7 +11,6 @@ type ContentType = {
   totalChars:number,
 }
 
-const {Grid} = UtilsGrid
 const _content:ContentType = {
   current:null,
   idActive:null,

@@ -1,6 +1,6 @@
 // tmp: deno run --allow-read --allow-write --allow-run guitui.ts
 // deno run --allow-read --allow-write --allow-run guitui.ts file-from-gui.toml [--]
-
+/** DEPRECATED
 import { GRID_DIRECTIONS, UtilsGrid } from '../modules/downquark.ventureCore.SubatomicModules/_sub/_utils/grid.ts' // "./_utils/grid.ts"
 const { Grid } = UtilsGrid
 
@@ -42,3 +42,4 @@ const setGridCells = Grid.Set.Cells({location:subGrid.subGridPerimeter.applied,v
 Grid.Render()
 
 console.log('setGridCells: ', new Set([...setGridCells]))
+*/
