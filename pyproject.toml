@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "guitui"
+version = "0.0.1-pre-alpha"
+description = "Make a Gui using a TUI"
+authors = ["dq-mlnck"]
+readme = "README.md"
+packages = [{include = "downquark_gui_tui"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
