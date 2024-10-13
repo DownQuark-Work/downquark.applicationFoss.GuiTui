@@ -1,13 +1,16 @@
 [tool.poetry]
 name = "guitui"
-version = "0.0.1-pre-alpha"
+version = "0.0.1-alpha"
 description = "Make a Gui using a TUI"
 authors = ["dq-mlnck"]
 readme = "README.md"
-packages = [{include = "downquark_gui_tui"}]
+packages = [{include = "guitui"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.3"
 
 [build-system]
 requires = ["poetry-core"]
