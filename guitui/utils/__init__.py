@@ -6,8 +6,17 @@ def get_terminal_size():
     print('w/hh',size)
     return size
 
+# TODO: configure this from `.toml` file
+_stub_parsed_layout = [
+    ['header','header','header',],
+    ['sidebar', 'content', 'content',],
+    ['sidebar', 'content', 'content', ],
+    ['sidebar', 'content', 'content', ],
+    ['footer', 'footer', 'footer', ],
+]
 def determine_tui_section_indexes(full_grid_dimensions):
     print('full_terminal_grid_data',full_grid_dimensions)
+    print('NEXT STEP: create full mapping of sections to indexes here')
     return 'determine_tui_section_indexes'
 
 def parse_toml_file(path:str):
