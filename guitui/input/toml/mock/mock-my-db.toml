@@ -1,0 +1,9 @@
+[project.mock_my_db]
+grid = '''
+sidebar content content content
+sidebar content content content
+sidebar content content content
+'''
+[project.mock_my_db.processmap]
+sidebar=['erd','mock','tmp1','tmp2']
+content=['echo "TBD"']
