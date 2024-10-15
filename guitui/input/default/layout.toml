@@ -1,0 +1,16 @@
+title = "Dev [Start Up]"
+version = "0.0.1-alpha"
+authors = ["dq-mlnck"]
+
+[[layout]]
+name = "guitui"
+version = "0.0.1-alpha"
+description = "Make a Gui using a TUI"
+basepath = "%ROOT%/guitui/initial"
+
+
+[[layout]]
+name = "mock_my_db"
+version = "0.0.1-alpha"
+description = "Mock Database Implementation"
+basepath = "%ROOT%/guitui/mock-my-db"
