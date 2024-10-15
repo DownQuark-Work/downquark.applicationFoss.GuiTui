@@ -1,4 +1,4 @@
-from utils import get_terminal_size
+from utils import get_terminal_size, get_test
 
 def set_terminal_grid():
      (columns, lines) = get_terminal_size()
