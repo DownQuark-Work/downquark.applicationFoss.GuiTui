@@ -2,15 +2,39 @@ title = "Dev [Start Up]"
 version = "0.0.1-alpha"
 authors = ["dq-mlnck"]
 
-[[layout]]
-name = "guitui"
+[[project.layout]]
+id = "guitui"
+name = "(G|T)UI"
 version = "0.0.1-alpha"
 description = "Make a Gui using a TUI"
-basepath = "%ROOT%/initial"
+basepath = "initialize"
 
-
-[[layout]]
-name = "mock_my_db"
+[[project.layout]]
+id = "mock_my_db"
+name = "Mock My Db"
 version = "0.0.1-alpha"
-description = "Mock Database Implementation"
-basepath = "%ROOT%/mock_my_db"
+description = "Database Mocking"
+basepath = "mock-my-db"
+
+[project.guitui]
+grid = """
+header header header
+sidebar content content
+sidebar content content
+footer footer footer
+"""
+[project.guitui.processmap]
+header=['TEMPLATE_TOP']
+sidebar=['cd ~/Desktop','ls -l']
+content=['echo "TBD"']
+footer=['TEMPLATE_FOOTER']
+
+[project.mock_my_db]
+grid = """
+sidebar content content content
+sidebar content content content
+sidebar content content content
+"""
+[project.mock_my_db.processmap]
+sidebar=['erd','mock','tmp1','tmp2']
+content=['echo "TBD"']
