@@ -6,11 +6,11 @@ authors = ["dq-mlnck"]
 name = "guitui"
 version = "0.0.1-alpha"
 description = "Make a Gui using a TUI"
-basepath = "%ROOT%/guitui/initial"
+basepath = "%ROOT%/initial"
 
 
 [[layout]]
 name = "mock_my_db"
 version = "0.0.1-alpha"
 description = "Mock Database Implementation"
-basepath = "%ROOT%/guitui/mock-my-db"
+basepath = "%ROOT%/mock-my-db"
