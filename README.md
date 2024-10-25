@@ -1,7 +1,7 @@
 # downquark.applicationFoss.GuiTui
 Create TUIs with a GUI
 
-run with: `py guitui `
+run with: `py guitui`
 
 - _RUN\_SCRIPT_: TBD
 
