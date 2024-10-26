@@ -19,6 +19,7 @@ def good_fibonacci(n):
     return a+b, a
 
 if __name__ == '__main__':
+    print('HERE WE GO: starting point for scaffold: https://github.com/MartinHeinz/python-project-blueprint/tree/master/blueprint')
     print('proof of concept::running')
     print('get_terminal_size', get_terminal_size())
     print('set_terminal_grid',set_terminal_grid())
