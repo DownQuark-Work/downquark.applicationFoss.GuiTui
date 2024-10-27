@@ -20,6 +20,7 @@ def good_fibonacci(n):
 
 if __name__ == '__main__':
     print('HERE WE GO: starting point for scaffold: https://github.com/MartinHeinz/python-project-blueprint/tree/master/blueprint')
+    print('and perhaps this as the followup: https://github.com/faif/python-patterns/blob/master/patterns/structural/3-tier.py')
     print('proof of concept::running')
     print('get_terminal_size', get_terminal_size())
     print('set_terminal_grid',set_terminal_grid())
